@@ -77,6 +77,7 @@
           <th>ชื่อ-สกุล</th>
           <th>รหัสนักศึกษา</th>
           <th>ห้องที่ติดต่อ</th>
+          <th>เวลา</th>
         </tr>
         </thead>
         <tbody id="dataRow">
@@ -115,7 +116,9 @@
       let lname = document.getElementById('idName').value;
       let lstuid = document.getElementById('idStuid').value;
       let lroom = document.getElementById('idRoom').value;
-      let ltime = Date.now();
+      let ltime = new Date()
+      ltime = ltime.getDate()  + "-" + (ltime.getMonth()+1) + "-" + ltime.getFullYear() + " " +
+      ltime.getHours() + ":" + ltime.getMinutes();
       dataRef.push({
         name: lname,
         stuid: lstuid,
@@ -126,7 +129,7 @@
     dataRef.orderByChild("name").limitToLast(100).on('child_added', function (childSnapshot) {
       let item = childSnapshot.val()
       document.getElementById('dataRow').innerHTML += "<tr><td>" + item.name + "</td><td>" +
-        item.stuid + "</td><td>" + item.room + "</td></tr>"
+        item.stuid + "</td><td>" + item.room + "</td><td>" + item.time + "</td></tr>"
     });
 
   </script>
