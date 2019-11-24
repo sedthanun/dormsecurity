@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Hello</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css" />
+  <link href="https://fonts.googleapis.com/css?family=Kanit&display=swap" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+  <style>
+    body {
+      font-family: 'Kanit', sans-serif;
+      font-size: 20px
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container p-5 mx-auto mt-md-3 row bg-white card flex-md-row shadow">
+    <div class="row mx-auto">
+      <div class="col-md-10">
+        <h1>รายชื่อนักศึกษาที่แลกบัตร</h1>
+      </div>
+      <div class="col-md-2">
+        <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#form1"><i class="fas fa-plus"></i> 
+          แลกบัตร</button>
+      </div>
+      <form class="was-validated">
+        <div class="modal fade" id="form1">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">ระบบแลกบัตร</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                  <label for="name">ชื่อ-สกุล :</label><br>
+                  <input class="form-control" type="text" id="idName" placeholder="Ex. นายรักชาติ ใจดี" required>
+                  <div class="valid-feedback">ถูกต้อง</div>
+                  <div class="invalid-feedback">กรุณากรอกข้อมูล</div>
+                </div>
+                <div class="form-group">
+                  <label for="stuid">รหัสนักศึกษา :</label><br>
+                  <input class="form-control" type="text" id="idStuid" placeholder="Ex. 62000000" required>
+                  <div class="valid-feedback">ถูกต้อง</div>
+                  <div class="invalid-feedback">กรุณากรอกข้อมูล</div>
+                </div>
+                <div class="form-group">
+                  <label for="room">ห้องที่ติดต่อ :</label><br>
+                  <input class="form-control" type="text" id="idRoom" placeholder="Ex. 4000" required>
+                  <div class="valid-feedback">ถูกต้อง</div>
+                  <div class="invalid-feedback">กรุณากรอกข้อมูล</div>
+                </div>
+                <br>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
+                <input class="btn btn-danger" type="reset" value="รีเซ็ต">
+                <button type="submit" class="btn btn-primary" data-dismiss="modal" id="SubmitBtn">ยืนยัน</button>
+              
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <hr class="w-100">
+      <table class="table table-striped">
+        <tr>
+          <th>ชื่อ-สกุล</th>
+          <th>รหัสนักศึกษา</th>
+          <th>ห้องที่ติดต่อ</th>
+        </tr>
+        </thead>
+        <tbody id="dataRow">
+        </tbody>
+      </table>
+      <br>
+      <br>
+    </div>
+
+  </div>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+  <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-analytics.js"></script>
+
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyBEJ4BiuuRbXpVu1UlY3QmnpYr_IkmEIwo",
+      authDomain: "dormsecurity.firebaseapp.com",
+      databaseURL: "https://dormsecurity.firebaseio.com",
+      projectId: "dormsecurity",
+      storageBucket: "dormsecurity.appspot.com",
+      messagingSenderId: "591998015538",
+      appId: "1:591998015538:web:6a65a87de715334296c42b",
+      measurementId: "G-VGQT6XRQ4S"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+    let myFirebase = firebase.database();
+    let dataRef = myFirebase.ref('/studentbook');
+    document.getElementById("SubmitBtn").onclick = function () {
+      let lname = document.getElementById('idName').value;
+      let lstuid = document.getElementById('idStuid').value;
+      let lroom = document.getElementById('idRoom').value;
+      let ltime = Date.now();
+      dataRef.push({
+        name: lname,
+        stuid: lstuid,
+        room: lroom,
+        time: ltime
+      });
+    };
+    dataRef.orderByChild("name").limitToLast(100).on('child_added', function (childSnapshot) {
+      let item = childSnapshot.val()
+      document.getElementById('dataRow').innerHTML += "<tr><td>" + item.name + "</td><td>" +
+        item.stuid + "</td><td>" + item.room + "</td></tr>"
+    });
+
+  </script>
+  
+
+</body>
+
+
+
+</html>
