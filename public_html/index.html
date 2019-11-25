@@ -65,7 +65,7 @@
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
                 <input class="btn btn-danger" type="reset" value="รีเซ็ต">
-                <button onclick="check()" type="submit" class="btn btn-primary enableOnInput" data-dismiss="modal" id="SubmitBtn" disabled='disabled' >ยืนยัน</button>
+                <button type="submit" class="btn btn-primary enableOnInput" data-dismiss="modal" id="SubmitBtn" disabled='disabled'>ยืนยัน</button>
               
               </div>
             </div>
@@ -92,16 +92,21 @@
   </div>
   <!-- The core Firebase JS SDK is always required and must be listed first -->
   <script type='text/javascript'>
-    
-    $(function () {
-        $('#idName, #idStuid, #idRoom').keyup(function () {
-            if ($('this').val() == '') {
-                $('.enableOnInput').prop('disabled', true);
-            } else {
-                $('.enableOnInput').prop('disabled', false);
-            }
-        });
-    }); 
+
+    $("#idName, #idStuid, #idRoom").bind('keyup', function(){
+      if(allFilled()) $('#SubmitBtn').removeAttr('disabled');
+    });
+
+    function allFilled() {
+      var filled = true;
+      $('body input').each(function() {
+        if($(this).val() == '') filled = false;
+      });
+      return filled;
+      
+    }
+
+
   </script>
   <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase.js"></script>
   <!-- TODO: Add SDKs for Firebase products that you want to use
