@@ -103,7 +103,7 @@
         if($(this).val() == '') filled = false;
       });
       return filled;
-      
+
     }
 
 
@@ -135,6 +135,9 @@
       let lstuid = document.getElementById('idStuid').value;
       let lroom = document.getElementById('idRoom').value;
       let ltime = new Date()
+      document.getElementById("idName").value = "";
+      document.getElementById("idStuid").value = "";
+      document.getElementById("idRoom").value = "";
       ltime = ltime.getDate()  + "-" + (ltime.getMonth()+1) + "-" + ltime.getFullYear() + " " +
       ltime.getHours() + ":" + ltime.getMinutes();
       dataRef.push({
