@@ -13,7 +13,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
-  
+  <script type="text/javascript" src="http://momentjs.com/downloads/moment-with-locales.min.js"></script> 
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
   <style type="text/css">
     body{
@@ -64,7 +64,6 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
-                <input class="btn btn-danger" type="reset" value="รีเซ็ต">
                 <button type="submit" class="btn btn-primary enableOnInput" data-dismiss="modal" id="SubmitBtn" disabled='disabled'>ยืนยัน</button>
               
               </div>
@@ -91,23 +90,7 @@
 
   </div>
   <!-- The core Firebase JS SDK is always required and must be listed first -->
-  <script type='text/javascript'>
 
-    $("#idName, #idStuid, #idRoom").bind('keyup', function(){
-      if(allFilled()) $('#SubmitBtn').removeAttr('disabled');
-    });
-
-    function allFilled() {
-      var filled = true;
-      $('body input').each(function() {
-        if($(this).val() == '') filled = false;
-      });
-      return filled;
-
-    }
-
-
-  </script>
   <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase.js"></script>
   <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
@@ -138,8 +121,7 @@
       document.getElementById("idName").value = "";
       document.getElementById("idStuid").value = "";
       document.getElementById("idRoom").value = "";
-      ltime = ltime.getDate()  + "-" + (ltime.getMonth()+1) + "-" + ltime.getFullYear() + " " +
-      ltime.getHours() + ":" + ltime.getMinutes();
+      ltime = moment().utcOffset('+0700').format('DD-MM-YYYY HH:mm')
       dataRef.push({
         name: lname,
         stuid: lstuid,
@@ -154,8 +136,23 @@
     });
 
   </script>
-  
+    <script type='text/javascript'>
 
+      $("#idName, #idStuid, #idRoom").bind('keyup', function(){
+        if(allFilled()) $('#SubmitBtn').removeAttr('disabled');
+      });
+  
+      function allFilled() {
+        var filled = true;
+        $('body input').each(function() {
+          if($(this).val() == '') filled = false;
+        });
+        return filled;
+  
+      }
+  
+  
+    </script>
 </body>
 
 
