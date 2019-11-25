@@ -12,6 +12,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+  
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
   <style type="text/css">
     body{
@@ -63,7 +65,7 @@
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
                 <input class="btn btn-danger" type="reset" value="รีเซ็ต">
-                <button type="submit" class="btn btn-primary" data-dismiss="modal" id="SubmitBtn">ยืนยัน</button>
+                <button type="submit" class="btn btn-primary enableOnInput" data-dismiss="modal" id="SubmitBtn" disabled='disabled' >ยืนยัน</button>
               
               </div>
             </div>
@@ -89,8 +91,18 @@
 
   </div>
   <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script type='text/javascript'>
+    $(function () {
+        $('#idName, #idStuid, #idRoom').keyup(function () {
+            if ($('this').val() == '') {
+                $('.enableOnInput').prop('disabled', true);
+            } else {
+                $('.enableOnInput').prop('disabled', false);
+            }
+        });
+    }); 
+  </script>
   <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase.js"></script>
-
   <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
   <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-analytics.js"></script>
@@ -126,10 +138,10 @@
         time: ltime
       });
     };
-    dataRef.orderByChild("name").limitToLast(100).on('child_added', function (childSnapshot) {
+    dataRef.orderByChild("time").limitToLast(100).on('child_added', function (childSnapshot) {
       let item = childSnapshot.val()
       document.getElementById('dataRow').innerHTML += "<tr><td>" + item.name + "</td><td>" +
-        item.stuid + "</td><td>" + item.room + "</td><td>" + item.time + "</td></tr>"
+        item.stuid + "</td><td>" + item.room + "</td><td>" + item.time + "</td></td>" 
     });
 
   </script>
