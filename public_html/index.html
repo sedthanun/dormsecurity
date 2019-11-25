@@ -13,24 +13,60 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
-  <script type="text/javascript" src="moment-with-locales.js"></script> 
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+  <script type="text/javascript" src="moment-with-locales.js"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+    integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
   <style type="text/css">
-    body{
-    font-family: 'maledpanregular';
-    font-size: 15px;
-        }
-    .btn-outline-danger{
+    body {
+      font-family: 'maledpanregular';
+      font-size: 15px;
+    }
+
+    .btn-outline-danger {
       border-radius: 40px;
       transition: 0.5s;
     }
+
     .btn-outline-danger:hover {
       transform: scale(1.2);
-}
-    .btn-outline-danger:focus{
-    outline: none!important;
-    box-shadow:none;
     }
+
+    .btn-outline-danger:focus {
+      outline: none !important;
+      box-shadow: none;
+    }
+
+    .btn-ripple {
+      display: inline-block;
+      position: relative;
+      overflow: hidden;
+      transition: all ease-in-out .5s;
+    }
+
+    .btn-ripple::after {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 25%;
+      height: 100%;
+      width: 50%;
+      background-color: #000;
+      border-radius: 50%;
+      opacity: 0;
+      pointer-events: none;
+      transition: all ease-in-out 0.5s;
+      transform: scale(5, 5);
+    }
+
+    .btn-ripple:active::after {
+      padding: 0;
+      margin: 0;
+      opacity: .2;
+      transition: 0s;
+      transform: scale(0, 0);
+    }
+
   </style>
 </head>
 
@@ -41,7 +77,8 @@
         <h1>รายชื่อนักศึกษาที่แลกบัตร</h1>
       </div>
       <div class="col-md-2">
-        <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#form1"><i class="fas fa-plus"></i> 
+        <button type="button" class="btn btn-outline-danger btn-ripple btn-iconed" data-toggle="modal" data-target="#form1"><i
+            class="fas fa-plus"></i>
           แลกบัตร</button>
       </div>
       <form class="was-validated">
@@ -56,20 +93,30 @@
               <div class="modal-body">
                 <div class="form-group">
                   <label for="name">ชื่อ-สกุล :</label><br>
-                  <input class="form-control" type="text" id="idName" placeholder="Ex. นายรักชาติ ใจดี" required="required">
+                  <input class="form-control" type="text" id="idName" placeholder="Ex. นายรักชาติ ใจดี"
+                    required="required">
                   <div class="valid-feedback">ถูกต้อง</div>
                   <div class="invalid-feedback">กรุณากรอกข้อมูล</div>
                 </div>
                 <div class="form-group">
                   <label for="stuid">รหัสนักศึกษา :</label><br>
-                  <input class="form-control" type="text" min="1" oninput="this.value=this.value.replace(/[^0-9]/g,'');" id="idStuid" placeholder="Ex. 62000000" maxlength="8" required>
+                  <input class="form-control" type="text" min="1" oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                    id="idStuid" placeholder="Ex. 62000000" maxlength="8" required>
                   <div class="valid-feedback">ถูกต้อง</div>
                   <div class="invalid-feedback">กรุณากรอกข้อมูล</div>
                 </div>
                 <div class="form-group">
                   <label for="room">ห้องที่ติดต่อ :</label><br>
-                  <input class="form-control" type="text" min="1" oninput="this.value=this.value.replace(/[^0-9]/g,'');" id="idRoom" placeholder="Ex. 4000" maxlength="4" required>
+                  <input class="form-control" type="text" min="1" oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                    id="idRoom" placeholder="Ex. 4000" maxlength="4" required>
                   <div class="valid-feedback">ถูกต้อง</div>
+                  <div class="invalid-feedback">กรุณากรอกข้อมูล</div>
+                </div>
+                <div class="form-group">
+                  <label for="name">อีเมลเจ้าของห้อง(แจ้งเตือนไปยังเจ้าของห้อง) :</label><br>
+                  <input class="form-control" type="email" id="idEmail" placeholder="Ex. รหัสนักศึกษา@kmitl.ac.th"
+                    required="required">
+                  <div class="valid-feedback"></div>
                   <div class="invalid-feedback">กรุณากรอกข้อมูล</div>
                 </div>
                 <br>
@@ -77,8 +124,9 @@
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
                 <input class="btn btn-danger" id="ResetBtn" type="reset" value="รีเซ็ต">
-                <button type="submit" class="btn btn-primary enableOnInput" data-dismiss="modal" id="SubmitBtn" disabled='disabled'>ยืนยัน</button>
-              
+                <button type="submit" class="btn btn-primary enableOnInput" data-dismiss="modal" id="SubmitBtn"
+                  disabled='disabled'>ยืนยัน</button>
+
               </div>
             </div>
           </div>
@@ -130,17 +178,20 @@
       let lname = document.getElementById('idName').value;
       let lstuid = document.getElementById('idStuid').value;
       let lroom = document.getElementById('idRoom').value;
+      let lemail = document.getElementById('idEmail').value;
       let ltime = new Date()
       document.getElementById("idName").value = "";
       document.getElementById("idStuid").value = "";
       document.getElementById("idRoom").value = "";
+      document.getElementById("idEmail").value = "";
       //location.reload(true);//
       ltime = moment().utcOffset('+0700').format('DD-MM-YYYY HH:mm')
       dataRef.push({
         name: lname,
         stuid: lstuid,
         room: lroom,
-        time: ltime
+        time: ltime,
+        email: lemail
       });
       $('#form1').modal('hide');
       $('#SubmitBtn').attr('disabled', 'disabled');
@@ -148,33 +199,33 @@
     dataRef.orderByChild("time").limitToLast(100).on('child_added', function (childSnapshot) {
       let item = childSnapshot.val()
       document.getElementById('dataRow').innerHTML += "<tr><td>" + item.name + "</td><td>" +
-        item.stuid + "</td><td>" + item.room + "</td><td>" + item.time + "</td></td>" 
+        item.stuid + "</td><td>" + item.room + "</td><td>" + item.time + "</td></td>"
     });
 
   </script>
-    <script type='text/javascript'>
+  <script type='text/javascript'>
 
-      $("#idName, #idStuid, #idRoom").bind('keyup', function(){
-        if(allFilled()) $('#SubmitBtn').removeAttr('disabled');
-        else $('#SubmitBtn').attr('disabled', 'disabled');
+    $("#idName, #idStuid, #idRoom, #idEmail").bind('keyup', function () {
+      if (allFilled()) $('#SubmitBtn').removeAttr('disabled');
+      else $('#SubmitBtn').attr('disabled', 'disabled');
+    });
+
+    function allFilled() {
+      var filled = true;
+      $('body input').each(function () {
+        if ($(this).val() == '') filled = false;
       });
-  
-      function allFilled() {
-        var filled = true;
-        $('body input').each(function() {
-          if($(this).val() == '') filled = false;
-        });
-        return filled;
-  
-      }
-  
-  
-    </script>
-    <script>
-      document.getElementById("ResetBtn").onclick = function () {
-        $('#SubmitBtn').attr('disabled', 'disabled');
-      }
-    </script>
+      return filled;
+
+    }
+
+
+  </script>
+  <script>
+    document.getElementById("ResetBtn").onclick = function () {
+      $('#SubmitBtn').attr('disabled', 'disabled');
+    }
+  </script>
 </body>
 
 
