@@ -18,7 +18,19 @@
   <style type="text/css">
     body{
     font-family: 'maledpanregular';
+    font-size: 15px;
         }
+    .btn-outline-danger{
+      border-radius: 40px;
+      transition: 0.5s;
+    }
+    .btn-outline-danger:hover {
+      transform: scale(1.2);
+}
+    .btn-outline-danger:focus{
+    outline: none!important;
+    box-shadow:none;
+    }
   </style>
 </head>
 
@@ -64,6 +76,7 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
+                <input class="btn btn-danger" id="ResetBtn" type="reset" value="รีเซ็ต">
                 <button type="submit" class="btn btn-primary enableOnInput" data-dismiss="modal" id="SubmitBtn" disabled='disabled'>ยืนยัน</button>
               
               </div>
@@ -121,7 +134,7 @@
       document.getElementById("idName").value = "";
       document.getElementById("idStuid").value = "";
       document.getElementById("idRoom").value = "";
-      location.reload(true);
+      //location.reload(true);//
       ltime = moment().utcOffset('+0700').format('DD-MM-YYYY HH:mm')
       dataRef.push({
         name: lname,
@@ -129,6 +142,8 @@
         room: lroom,
         time: ltime
       });
+      $('#form1').modal('hide');
+      $('#SubmitBtn').attr('disabled', 'disabled');
     };
     dataRef.orderByChild("time").limitToLast(100).on('child_added', function (childSnapshot) {
       let item = childSnapshot.val()
@@ -141,6 +156,7 @@
 
       $("#idName, #idStuid, #idRoom").bind('keyup', function(){
         if(allFilled()) $('#SubmitBtn').removeAttr('disabled');
+        else $('#SubmitBtn').attr('disabled', 'disabled');
       });
   
       function allFilled() {
@@ -153,6 +169,11 @@
       }
   
   
+    </script>
+    <script>
+      document.getElementById("ResetBtn").onclick = function () {
+        $('#SubmitBtn').attr('disabled', 'disabled');
+      }
     </script>
 </body>
 
