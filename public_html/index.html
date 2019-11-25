@@ -121,6 +121,7 @@
       document.getElementById("idName").value = "";
       document.getElementById("idStuid").value = "";
       document.getElementById("idRoom").value = "";
+      location.reload(true);
       ltime = moment().utcOffset('+0700').format('DD-MM-YYYY HH:mm')
       dataRef.push({
         name: lname,
