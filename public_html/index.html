@@ -14,6 +14,27 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
   <script type="text/javascript" src="moment-with-locales.js"></script>
+  <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+ 
+	<script type="text/javascript">
+	$(document).ready(function(){
+		<!--Smooth Page Scroll to Top-->
+			$(window).scroll(function(){
+				if ($(this).scrollTop() > 100) {
+					$('.scrollup').fadeIn();
+				} else {
+					$('.scrollup').fadeOut();
+				}
+			}); 
+	 
+			$('.scrollup').click(function(){
+				$("html, body").animate({ scrollTop: 0 }, 600);
+				return false;
+			});
+		<!--//-->
+		
+	});
+	</script>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
     integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
   <style type="text/css">
@@ -66,7 +87,17 @@
       transition: 0s;
       transform: scale(0, 0);
     }
-
+    .scrollup {
+			width:40px;
+			height:40px;
+			opacity:0.3;
+			position:fixed;
+			bottom:50px;
+			right:100px;
+			display:none;
+			text-indent:-9999px;
+			background: url(icon_top.png) no-repeat;
+		}
   </style>
 </head>
 
@@ -150,6 +181,7 @@
     </div>
 
   </div>
+  <a href="#" class="scrollup">Scroll</a>
   <!-- The core Firebase JS SDK is always required and must be listed first -->
 
   <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase.js"></script>
