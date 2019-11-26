@@ -178,7 +178,9 @@
       document.getElementById("idName").value = "";
       document.getElementById("idStuid").value = "";
       document.getElementById("idRoom").value = "";
-      document.getElementById("idEmail").value = "";}
+      document.getElementById("idEmail").value = "";
+      $('#SubmitBtn').attr('disabled', 'disabled');
+      }
     document.getElementById("SubmitBtn").onclick = function () {
       let lname = document.getElementById('idName').value;
       let lstuid = document.getElementById('idStuid').value;
@@ -198,7 +200,7 @@
         time: ltime,
         email: lemail
       });
-      alert("Success")
+      alert("ส่งข้อมูลเรียบร้อย")
       $('#form1').modal('hide');
       $('#SubmitBtn').attr('disabled', 'disabled');
     };
