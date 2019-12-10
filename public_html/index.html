@@ -18,7 +18,7 @@
  
 	<script type="text/javascript">
 	$(document).ready(function(){
-		<!--Smooth Page Scroll to Top-->
+	  /* ปุ่มเลื่อนหน้าต่างขึ้นด้านบน */
 			$(window).scroll(function(){
 				if ($(this).scrollTop() > 100) {
 					$('.scrollup').fadeIn();
@@ -98,7 +98,10 @@
 			text-indent:-9999px;
 			background: url(icon_top.png) no-repeat;
 			/* ตั้งให้ปุ่มกลับไปบนสุดปรากฎออกเมื่อเวลาเลื่อนเมาส์หารายชื่อจำนวนมากในแถบล่าง */
-		}
+    }
+    .table{
+      box-shadow: 7px 7px 5px grey;
+    }
   </style>
 </head>
 
@@ -117,6 +120,7 @@
         <div class="modal fade" id="form1">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
+              <!--แบบฟอร์มข้อมูลของผู้มาติดต่อ-->
               <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">ระบบแลกบัตร</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -166,6 +170,7 @@
       </form>
 
       <hr class="w-100">
+      <!--ตารางแสดงข้อมูลของผู้มาติดต่อ-->
       <table class="table table-striped">
         <tr>
           <th>ชื่อ-สกุล</th>
