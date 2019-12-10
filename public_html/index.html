@@ -97,6 +97,7 @@
 			display:none;
 			text-indent:-9999px;
 			background: url(icon_top.png) no-repeat;
+			/* ตั้งให้ปุ่มกลับไปบนสุดปรากฎออกเมื่อเวลาเลื่อนเมาส์หารายชื่อจำนวนมากในแถบล่าง */
 		}
   </style>
 </head>
@@ -178,7 +179,7 @@
       </table>
       <br>
       <br>
-    </div>
+    </div> 
 
   </div>
   <a href="#" class="scrollup">Scroll</a>
@@ -243,7 +244,7 @@
     });
 
   </script>
-  <script type='text/javascript'>
+  <script type='text/javascript'> 
 
     $("#idName, #idStuid, #idRoom, #idEmail").bind('keyup', function () {
       if (allFilled()) $('#SubmitBtn').removeAttr('disabled');
