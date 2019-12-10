@@ -43,6 +43,7 @@
       font-size: 15px;
     }
 
+
     .btn-outline-danger {
       border-radius: 40px;
       transition: 0.5s;
@@ -53,6 +54,20 @@
     }
 
     .btn-outline-danger:focus {
+      outline: none !important;
+      box-shadow: none;
+    }
+    .btn-outline-success {
+      border-radius: 40px;
+      transition: 0.5s;
+      margin-right: 15px;
+    }
+
+    .btn-outline-success:hover {
+      transform: scale(1.2);
+    }
+
+    .btn-outline-success:focus {
       outline: none !important;
       box-shadow: none;
     }
@@ -102,17 +117,22 @@
     .table{
       box-shadow: 7px 7px 5px grey;
     }
+    
+
   </style>
 </head>
 
 <body>
   <div class="container p-5 mx-auto mt-md-3 row bg-white card flex-md-row shadow">
-    <div class="row mx-auto">
-      <div class="col-md-10">
+    <div class="row mx-auto p-0">
+      <div class="col-xl-10 col-lg-8 col-md-6 float-left">
         <h1>รายชื่อนักศึกษาที่แลกบัตร</h1>
       </div>
-      <div class="col-md-2">
-        <button type="button" class="btn btn-outline-danger btn-ripple btn-iconed" data-toggle="modal" data-target="#form1"><i
+      <div class="col-xl-2 col-lg-4 col-md-6 ml-auto p-0">
+        <button type="button" class="btn btn-outline-success btn-ripple"><i
+            class="fas fa-file-download"></i>
+          </button>
+        <button type="button" class="btn btn-outline-danger btn-ripple" data-toggle="modal" data-target="#form1"><i
             class="fas fa-plus"></i>
           แลกบัตร</button>
       </div>
@@ -242,7 +262,7 @@
       $('#form1').modal('hide');
       $('#SubmitBtn').attr('disabled', 'disabled');
     };
-    dataRef.orderByChild("time").limitToLast(100).on('child_added', function (childSnapshot) {
+    dataRef.orderByChild("time").limitToLast(50).on('child_added', function (childSnapshot) {
       let item = childSnapshot.val()
       document.getElementById('dataRow').innerHTML += "<tr><td>" + item.name + "</td><td>" +
         item.stuid + "</td><td>" + item.room + "</td><td>" + item.time + "</td></td>"
