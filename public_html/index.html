@@ -144,9 +144,8 @@
         <h1>รายชื่อนักศึกษาที่แลกบัตร</h1>
       </div>
       <div class="col-xl-2 col-lg-4 col-md-6 ml-auto p-0">
-        <button type="button" class="btn btn-outline-success btn-ripple"><i
-            class="fas fa-file-download"></i>
-          </button>
+          <a class="btn btn-outline-success btn-ripple" href=https://docs.google.com/spreadsheets/d/1u9g5P4Q8sCsAAANk2cIzLP75rrESv5QqpVeHA1-RWRU/edit?fbclid=IwAR2Sizotgbis3j1saXSCYofWHuRwYi4WOyh-jVvOQdIf58oB69q-aH3cMA0#gid=0"" role="button"><i
+            class="fas fa-file-download"></i></a>
         <button type="button" class="btn btn-outline-danger btn-ripple" data-toggle="modal" data-target="#form1"><i
             class="fas fa-plus"></i>
           แลกบัตร</button>
@@ -320,12 +319,6 @@
       return filled;
     }
   </script>
-  <script>
-    function updateDiv() {
-        $("#tableone").load(window.location.href + " #tableone");
-    }
-    window.setInterval(updateDiv, 1000);
-</script>
   <script>
     document.getElementById("ResetBtn").onclick = function () {
       $('#SubmitBtn').attr('disabled', 'disabled');
