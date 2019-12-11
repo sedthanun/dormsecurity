@@ -212,6 +212,8 @@
           <th>รหัสนักศึกษา</th>
           <th>ห้องที่ติดต่อ</th>
           <th>เวลา</th>
+          <th></th>
+          <th></th>
         </tr>
         </thead>
         <tbody id="dataRow">
@@ -271,7 +273,8 @@
         stuid: lstuid,
         room: lroom,
         time: ltime,
-        email: lemail
+        email: lemail,
+        status: 'ยังไม่คืน'
       });
       alert("ส่งข้อมูลเรียบร้อย")
       $('#form1').modal('hide');
@@ -280,7 +283,8 @@
     dataRef.orderByChild("time").limitToLast(50).on('child_added', function (childSnapshot) {
       let item = childSnapshot.val()
       document.getElementById('dataRow').innerHTML += "<tr><td>" + item.name + "</td><td>" +
-        item.stuid + "</td><td>" + item.room + "</td><td>" + item.time + "</td></td>"
+        item.stuid + "</td><td>" + item.room + "</td><td>" + item.time + "</td><td>" + item.status +"</td></td>" +
+        "<td><button type='button' class='btn btn-outline-danger' onclick='restore(\""+childSnapshot.key+"\")'>คืน</button></td>"
     });
   </script>
   <script>
@@ -309,6 +313,11 @@
   <script>
     document.getElementById("ResetBtn").onclick = function () {
       $('#SubmitBtn').attr('disabled', 'disabled');
+    }
+    function restore(bookid) {
+        firebase.database().ref('studentbook/' + bookid).update({
+          status: 'คืนแล้ว'
+          });
     }
   </script>
 </body>
