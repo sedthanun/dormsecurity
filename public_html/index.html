@@ -127,16 +127,19 @@
     .search:focus {
       width: 100%;
 }
-.btn-outline-primary{
-  font-size: 14px;
+.btn-primary{
+  font-size: 16px;
   padding: 8px 8px;
+}
+.table{
+  font-size: 16px
 }
   </style>
 </head>
 
 <body>
   <div class="container p-5 mx-auto mt-md-3 row bg-white card flex-md-row shadow">
-    <div class="row mx-auto p-0">
+    <div class="row mx-auto p-0" id="tableone">
       <div class="col-xl-10 col-lg-8 col-md-6 float-left p-0">
         <h1>รายชื่อนักศึกษาที่แลกบัตร</h1>
       </div>
@@ -210,7 +213,7 @@
 
       <hr class="w-100">
       <!--ตารางแสดงข้อมูลของผู้มาติดต่อ-->
-      <table class="table table-striped">
+      <table class="table table-striped" id="tableone">
         <tr>
           <th>ชื่อ-สกุล</th>
           <th>รหัสนักศึกษา</th>
@@ -288,7 +291,10 @@
       let item = childSnapshot.val()
       document.getElementById('dataRow').innerHTML += "<tr><td>" + item.name + "</td><td>" +
         item.stuid + "</td><td>" + item.room + "</td><td>" + item.time + "</td><td>" + item.status +"</td></td>" +
-        "<td><button type='button' id='returnBtn' class='btn btn-outline-primary' onclick='restore(\""+childSnapshot.key+"\")'>คืน</button></td>"
+        "<td><button type='button' name='returnBtn' class='btn btn-primary' onclick='restore(\""+childSnapshot.key+"\")'>แลกคืน</button></td>"
+    });
+    dataRef.on('child_changed', function(){
+      location.reload();
     });
   </script>
   <script>
@@ -315,6 +321,12 @@
     }
   </script>
   <script>
+    function updateDiv() {
+        $("#tableone").load(window.location.href + " #tableone");
+    }
+    window.setInterval(updateDiv, 1000);
+</script>
+  <script>
     document.getElementById("ResetBtn").onclick = function () {
       $('#SubmitBtn').attr('disabled', 'disabled');
     }
@@ -323,6 +335,8 @@
           status: 'คืนแล้ว'
           });
     }
+
+
   </script>
 </body>
 </html>
