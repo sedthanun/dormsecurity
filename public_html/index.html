@@ -127,6 +127,10 @@
     .search:focus {
       width: 100%;
 }
+.btn-outline-primary{
+  font-size: 14px;
+  padding: 8px 8px;
+}
   </style>
 </head>
 
@@ -212,7 +216,7 @@
           <th>รหัสนักศึกษา</th>
           <th>ห้องที่ติดต่อ</th>
           <th>เวลา</th>
-          <th></th>
+          <th>สถานะ</th>
           <th></th>
         </tr>
         </thead>
@@ -284,7 +288,7 @@
       let item = childSnapshot.val()
       document.getElementById('dataRow').innerHTML += "<tr><td>" + item.name + "</td><td>" +
         item.stuid + "</td><td>" + item.room + "</td><td>" + item.time + "</td><td>" + item.status +"</td></td>" +
-        "<td><button type='button' class='btn btn-outline-danger' onclick='restore(\""+childSnapshot.key+"\")'>คืน</button></td>"
+        "<td><button type='button' id='returnBtn' class='btn btn-outline-primary' onclick='restore(\""+childSnapshot.key+"\")'>คืน</button></td>"
     });
   </script>
   <script>
