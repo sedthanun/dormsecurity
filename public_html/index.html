@@ -283,6 +283,16 @@
         item.stuid + "</td><td>" + item.room + "</td><td>" + item.time + "</td></td>"
     });
   </script>
+  <script>
+  $(document).ready(function(){
+    $("#idsearch").on("keyup", function() {
+      var value = $(this).val().toLowerCase();
+      $("#dataRow tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
+  </script>
   <script type='text/javascript'> 
     $("#idName, #idStuid, #idRoom, #idEmail").bind('keyup', function () {
       if (allFilled()) $('#SubmitBtn').removeAttr('disabled');
