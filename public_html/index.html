@@ -117,7 +117,26 @@
     .table{
       box-shadow: 7px 7px 5px grey;
     }
-    
+    .search {
+    width: 130px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 40px;
+    font-size: 15px;
+    background-color: white;
+    background-image: url('icon.jpg');
+    background-size: 25px;
+    background-position: 5px 5px; 
+    background-repeat: no-repeat;
+    padding: 8px 8px 8px 35px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+}
+/* When the input field gets focus, change its width to 100% */
+    .search:focus {
+      width: 100%;
+}
+
 
   </style>
 </head>
@@ -125,10 +144,10 @@
 <body>
   <div class="container p-5 mx-auto mt-md-3 row bg-white card flex-md-row shadow">
     <div class="row mx-auto p-0">
-      <div class="col-xl-10 col-lg-8 col-md-6 float-left">
+      <div class="col-xl-10 col-lg-8 col-md-6 float-left p-0">
         <h1>รายชื่อนักศึกษาที่แลกบัตร</h1>
       </div>
-      <div class="col-xl-2 col-lg-4 col-md-6 ml-auto p-0">
+      <div class="col-xl-2 col-lg-4 col-md-6 ml-auto p-0" style="margin-bottom: 10px">
         <button type="button" class="btn btn-outline-success btn-ripple"><i
             class="fas fa-file-download"></i>
           </button>
@@ -136,6 +155,7 @@
             class="fas fa-plus"></i>
           แลกบัตร</button>
       </div>
+      <input type="text" class="search" id="search" placeholder="Search..">
       <form class="was-validated">
         <div class="modal fade" id="form1">
           <div class="modal-dialog" role="document">
@@ -282,7 +302,6 @@
         if ($(this).val() == '') filled = false;
       });
       return filled;
-
     }
 
 
