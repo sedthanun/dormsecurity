@@ -42,17 +42,13 @@
       font-family: 'maledpanregular';
       font-size: 15px;
     }
-
-
     .btn-outline-danger {
       border-radius: 40px;
       transition: 0.5s;
     }
-
     .btn-outline-danger:hover {
       transform: scale(1.2);
     }
-
     .btn-outline-danger:focus {
       outline: none !important;
       box-shadow: none;
@@ -62,23 +58,19 @@
       transition: 0.5s;
       margin-right: 15px;
     }
-
     .btn-outline-success:hover {
       transform: scale(1.2);
     }
-
     .btn-outline-success:focus {
       outline: none !important;
       box-shadow: none;
     }
-
     .btn-ripple {
       display: inline-block;
       position: relative;
       overflow: hidden;
       transition: all ease-in-out .5s;
     }
-
     .btn-ripple::after {
       content: "";
       display: block;
@@ -94,7 +86,6 @@
       transition: all ease-in-out 0.5s;
       transform: scale(5, 5);
     }
-
     .btn-ripple:active::after {
       padding: 0;
       margin: 0;
@@ -136,8 +127,6 @@
     .search:focus {
       width: 100%;
 }
-
-
   </style>
 </head>
 
@@ -147,7 +136,7 @@
       <div class="col-xl-10 col-lg-8 col-md-6 float-left p-0">
         <h1>รายชื่อนักศึกษาที่แลกบัตร</h1>
       </div>
-      <div class="col-xl-2 col-lg-4 col-md-6 ml-auto p-0" style="margin-bottom: 10px">
+      <div class="col-xl-2 col-lg-4 col-md-6 ml-auto p-0">
         <button type="button" class="btn btn-outline-success btn-ripple"><i
             class="fas fa-file-download"></i>
           </button>
@@ -155,7 +144,12 @@
             class="fas fa-plus"></i>
           แลกบัตร</button>
       </div>
-      <input type="text" class="search" id="search" placeholder="Search..">
+      <div class="col-md-12 col-sm-6 col-xs-2 mx-0 p-0" style="margin-top: 10px;">
+        <div class="form-group">
+                <input class="form-control search" type="text" id="idsearch" placeholder="Search...">
+        </div>
+      </div>
+      <div class = "bs-example">
       <form class="was-validated">
         <div class="modal fade" id="form1">
           <div class="modal-dialog" role="document">
@@ -208,6 +202,7 @@
           </div>
         </div>
       </form>
+    </div>
 
       <hr class="w-100">
       <!--ตารางแสดงข้อมูลของผู้มาติดต่อ-->
@@ -287,24 +282,19 @@
       document.getElementById('dataRow').innerHTML += "<tr><td>" + item.name + "</td><td>" +
         item.stuid + "</td><td>" + item.room + "</td><td>" + item.time + "</td></td>"
     });
-
   </script>
   <script type='text/javascript'> 
-
     $("#idName, #idStuid, #idRoom, #idEmail").bind('keyup', function () {
       if (allFilled()) $('#SubmitBtn').removeAttr('disabled');
       else $('#SubmitBtn').attr('disabled', 'disabled');
     });
-
     function allFilled() {
       var filled = true;
-      $('body input').each(function () {
+      $('.bs-example input').each(function () {
         if ($(this).val() == '') filled = false;
       });
       return filled;
     }
-
-
   </script>
   <script>
     document.getElementById("ResetBtn").onclick = function () {
