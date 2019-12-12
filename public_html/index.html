@@ -174,8 +174,8 @@
                 </div>
                 <div class="form-group">
                   <label for="stuid">รหัสนักศึกษา :</label><br>
-                  <input class="form-control" type="text" min="1" oninput="this.value=this.value.replace(/[^0-9]/g,'');"
-                    id="idStuid" placeholder="Ex. 62000000" maxlength="8" required>
+                  <input class="form-control" type="text" pattern="^[0-9]{8}$" maxlength="8"
+                    id="idStuid" placeholder="Ex. 62000000" required>
                   <div class="valid-feedback">ถูกต้อง</div>
                   <div class="invalid-feedback">กรุณากรอกข้อมูล</div>
                 </div>
@@ -328,6 +328,8 @@
       var filled = true;
       $('.bs-example input').each(function () {
         if ($(this).val() == '') filled = false;
+        else if (document.getElementById("idStuid").validity.patternMismatch) filled = false;
+        else if (document.getElementById("idEmail").validity.patternMismatch) filled = false;
       });
       return filled;
     }
