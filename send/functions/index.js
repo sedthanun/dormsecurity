@@ -1,3 +1,5 @@
+"use strict";
+
 const functions = require("firebase-functions");
 
 // Firebase Admin initialization
@@ -5,7 +7,7 @@ var admin = require("firebase-admin");
 var serviceAccount = require("./service-account.json");
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://dormsecurity.firebaseio.com/"// https://console.firebase.google.com/u/0/project/{xxxxx}/overview
+  databaseURL: "https://dormsecurity.firebaseio.com"
 });
 
 // Get Google Sheets instance
@@ -20,36 +22,41 @@ const jwtClient = new google.auth.JWT({
 });
 
 // Get data from RTDB
-exports.copyToSheet = functions.database.ref("/studentbook/{documentId}").onCreate((snapshot, contex) => {
-  let data =  snapshot._data;
 
+exports.updateToSheet = functions.database.ref("/studentbook/{documentId}").onWrite((change, context) => {
+  let data = change.after.val();
+  console.log(data)
   // Convert JSON to Array following structure below
   /* 
   [
-    ['COL-A', 'COL-B', 'COL-C', 'COL-D', 'COL-E']
+    ['COL-A', 'COL-B'],
+    ['COL-A', 'COL-B']
   ]
   */
-  var valueArray = [[null, data.name, data.room, data.stuid, data.status, data.time]]; 
+
+  var valueArray = [[null, data.name, data.room, data.stuid, data.status, data.time]];
   var countArray = []
   countArray.push(valueArray)
+  console.log(valueArray);
 
-  
-  let maxRange = countArray.length + 1;
+
+  let maxRange = valueArray.length + 1;
 
   // Do authorization
   jwtClient.authorize();
-  
+
   // Create Google Sheets request
   let request = {
     auth: jwtClient,
     spreadsheetId: "1u9g5P4Q8sCsAAANk2cIzLP75rrESv5QqpVeHA1-RWRU",//https://docs.google.com/spreadsheets/d/{yyyyy}/
-    range: "History!B2:F" + maxRange,
+    range: "Petrol!A2:F" + maxRange,
     valueInputOption: "RAW",
+    
     requestBody: {
       values: valueArray
     }
   };
-  
+
   // Update data to Google Sheets
   sheets.spreadsheets.values.append(request, {});
 });
