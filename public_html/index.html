@@ -15,6 +15,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
   <script type="text/javascript" src="moment-with-locales.js"></script>
   <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
  
 	<script type="text/javascript">
 	$(document).ready(function(){
@@ -283,18 +284,31 @@
         email: lemail,
         status: 'ยังไม่คืน'
       });
-      alert("ส่งข้อมูลเรียบร้อย")
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'ส่งข้อมูลเรียบร้อย',
+        showConfirmButton: false,
+        timer: 1500
+      })
+      //alert("ส่งข้อมูลเรียบร้อย")
       $('#form1').modal('hide');
       $('#SubmitBtn').attr('disabled', 'disabled');
     };
-    dataRef.orderByChild("time").limitToLast(50).on('child_added', function (childSnapshot) {
-      let item = childSnapshot.val()
-      document.getElementById('dataRow').innerHTML += "<tr><td>" + item.name + "</td><td>" +
-        item.stuid + "</td><td>" + item.room + "</td><td>" + item.time + "</td><td>" + item.status +"</td></td>" +
-        "<td><button type='button' name='returnBtn' class='btn btn-primary' onclick='restore(\""+childSnapshot.key+"\")'>รับคืน</button></td>"
-    });
-    dataRef.on('child_changed', function(){
-      location.reload();
+    dataRef.orderByChild("time").limitToLast(50).on('value', function (childSnapshot) {
+      // console.log(childSnapshot.val())
+      document.getElementById('dataRow').innerHTML = ''
+      let allItems = childSnapshot.val()
+      Object.keys(allItems).forEach(key => {
+        item = allItems[key]
+        let returnButton = "<button type='button' name='returnBtn' class='btn btn-primary' onclick='restore(\""+key+"\")'>รับคืน</button>"
+        if(item.status == 'คืนแล้ว') {
+          returnButton = "<button disabled type='button' name='returnBtn' class='btn btn-dark' onclick='restore(\""+key+"\")'>คืนแล้ว</button>"
+        }
+        document.getElementById('dataRow').innerHTML += "<tr><td>" + item.name + "</td><td>" +
+          item.stuid + "</td><td>" + item.room + "</td><td>" + item.time + "</td><td>" + item.status +"</td></td>" +
+          "<td>"+ returnButton +"</td>"
+      })
     });
   </script>
   <script>
@@ -324,10 +338,12 @@
     document.getElementById("ResetBtn").onclick = function () {
       $('#SubmitBtn').attr('disabled', 'disabled');
     }
-    function restore(bookid) {
-        firebase.database().ref('studentbook/' + bookid).update({
+    function restore(bookid){
+      firebase.database().ref('studentbook/' + bookid).update({
           status: 'คืนแล้ว'
-          });
+    });
+    Swal.fire('คืนบัตรเรียบร้อย', '', 'success')
+    // window.location.href = "index.html";
     }
 
 

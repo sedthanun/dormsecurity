@@ -29,7 +29,7 @@ exports.copyToSheet = functions.database.ref("/studentbook/{documentId}").onCrea
     ['COL-A', 'COL-B', 'COL-C', 'COL-D', 'COL-E']
   ]
   */
-  var valueArray = [[data.name, data.room, data.stuid, data.time]]; 
+  var valueArray = [[null, data.name, data.room, data.stuid, data.status, data.time]]; 
   var countArray = []
   countArray.push(valueArray)
 
@@ -43,7 +43,7 @@ exports.copyToSheet = functions.database.ref("/studentbook/{documentId}").onCrea
   let request = {
     auth: jwtClient,
     spreadsheetId: "1u9g5P4Q8sCsAAANk2cIzLP75rrESv5QqpVeHA1-RWRU",//https://docs.google.com/spreadsheets/d/{yyyyy}/
-    range: "History!B2:E" + maxRange,
+    range: "History!B2:F" + maxRange,
     valueInputOption: "RAW",
     requestBody: {
       values: valueArray

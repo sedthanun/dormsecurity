@@ -20,7 +20,7 @@ const jwtClient = new google.auth.JWT({
 });
 
 // Get data from RTDB
-exports.copyToSheet = functions.database.ref("/studentbook/{documentId}").onCreate((snapshot, contex) => {
+exports.copyToSheet = functions.database.ref("/studentbook/{documentId}").onUpdate((snapshot, contex) => {
   let data =  snapshot._data;
 
   // Convert JSON to Array following structure below
@@ -29,7 +29,7 @@ exports.copyToSheet = functions.database.ref("/studentbook/{documentId}").onCrea
     ['COL-A', 'COL-B', 'COL-C', 'COL-D', 'COL-E']
   ]
   */
-  var valueArray = [[data.name, data.room, data.stuid, data.time]]; 
+  var valueArray = [['AAAA', data.name, data.room, data.stuid, data.time]]; 
   var countArray = []
   countArray.push(valueArray)
 
