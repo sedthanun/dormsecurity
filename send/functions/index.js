@@ -53,4 +53,3 @@ exports.copyToSheet = functions.database.ref("/studentbook/{documentId}").onCrea
   // Update data to Google Sheets
   sheets.spreadsheets.values.append(request, {});
 });
-
