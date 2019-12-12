@@ -23,40 +23,38 @@ const jwtClient = new google.auth.JWT({
 
 // Get data from RTDB
 
-exports.updateToSheet = functions.database.ref("/studentbook/{documentId}").onWrite((change, context) => {
+exports.copyToSheet = functions.database.ref("/studentbook").onUpdate((change, context) => {
   let data = change.after.val();
   console.log(data)
   // Convert JSON to Array following structure below
   /* 
   [
-    ['COL-A', 'COL-B'],
-    ['COL-A', 'COL-B']
+    ['COL-A', 'COL-B', 'COL-C', 'COL-D', 'COL-E']
   ]
   */
 
-  var valueArray = [[null, data.name, data.room, data.stuid, data.status, data.time]];
-  var countArray = []
-  countArray.push(valueArray)
-  console.log(valueArray);
-
+  var valueArray = []
+  Object.keys(data).forEach(key => {
+    let item = data[key]
+    valueArray.push([null, item.name, item.stuid, item.room, item.status, item.time]);
+  });
 
   let maxRange = valueArray.length + 1;
 
   // Do authorization
   jwtClient.authorize();
-
+  
   // Create Google Sheets request
   let request = {
     auth: jwtClient,
     spreadsheetId: "1u9g5P4Q8sCsAAANk2cIzLP75rrESv5QqpVeHA1-RWRU",//https://docs.google.com/spreadsheets/d/{yyyyy}/
-    range: "Petrol!A2:F" + maxRange,
+    range: "History!A2:F" + maxRange,
     valueInputOption: "RAW",
-    
     requestBody: {
       values: valueArray
     }
   };
 
   // Update data to Google Sheets
-  sheets.spreadsheets.values.append(request, {});
+  sheets.spreadsheets.values.update(request, {});
 });

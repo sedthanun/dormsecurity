@@ -108,6 +108,7 @@
     }
     .table{
       box-shadow: 7px 7px 5px grey;
+      font-size: 16px;
     }
     .search {
     width: 130px;
@@ -124,13 +125,18 @@
     -webkit-transition: width 0.4s ease-in-out;
     transition: width 0.4s ease-in-out;
 }
-/* When the input field gets focus, change its width to 100% */
-    .search:focus {
+.search:focus {
       width: 100%;
 }
-.table{
-  font-size: 16px
+
+.footer {
+   margin-top: 20px;
+   margin-bottom: 15px;
+   text-align: center;
 }
+
+
+
   </style>
 </head>
 
@@ -141,8 +147,7 @@
         <h1>รายชื่อนักศึกษาที่แลกบัตร</h1>
       </div>
       <div class="col-xl-2 col-lg-4 col-md-6 ml-auto p-0">
-          <a class="btn btn-outline-success btn-ripple" href=https://docs.google.com/spreadsheets/d/1u9g5P4Q8sCsAAANk2cIzLP75rrESv5QqpVeHA1-RWRU/edit?fbclid=IwAR2Sizotgbis3j1saXSCYofWHuRwYi4WOyh-jVvOQdIf58oB69q-aH3cMA0#gid=0"" role="button"><i
-            class="fas fa-file-download"></i></a>
+          <a class="btn btn-outline-success btn-ripple" href=https://docs.google.com/spreadsheets/d/1u9g5P4Q8sCsAAANk2cIzLP75rrESv5QqpVeHA1-RWRU/edit?fbclid=IwAR2Sizotgbis3j1saXSCYofWHuRwYi4WOyh-jVvOQdIf58oB69q-aH3cMA0#gid=0"" role="button">ประวัติ</a>
         <button type="button" class="btn btn-outline-danger btn-ripple" data-toggle="modal" data-target="#form1"><i
             class="fas fa-plus"></i>
           แลกบัตร</button>
@@ -155,7 +160,7 @@
       <h5>แสดง 50 รายชื่อล่าสุด</h5>
       <div class = "bs-example">
       <form class="was-validated">
-        <div class="modal fade" id="form1">
+        <div class="modal fade" id="form1" data-keyboard="false" data-backdrop="static">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <!--แบบฟอร์มข้อมูลของผู้มาติดต่อ-->
@@ -231,6 +236,14 @@
 
   </div>
   <a href="#" class="scrollup">Scroll</a>
+  <div class="footer">
+      <h6>Created by NORMALWHERE</h6>
+      <small><a href="https://github.com/sedthanun/dormsecurity">Github</a></small>
+
+  </div>
+  </footer>
+
+  
   <!-- The core Firebase JS SDK is always required and must be listed first -->
 
   <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase.js"></script>
@@ -293,7 +306,7 @@
       $('#form1').modal('hide');
       $('#SubmitBtn').attr('disabled', 'disabled');
     };
-    dataRef.orderByChild("time").limitToLast(50).on('value', function (childSnapshot) {
+    dataRef.orderByChild("time").on('value', function (childSnapshot) {
       // console.log(childSnapshot.val())
       document.getElementById('dataRow').innerHTML = ''
       let allItems = childSnapshot.val()
