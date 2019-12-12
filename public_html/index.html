@@ -143,10 +143,10 @@
 <body>
   <div class="container p-5 mx-auto mt-md-3 row bg-white card flex-md-row shadow">
     <div class="row mx-auto p-0" id="tableone">
-      <div class="col-xl-10 col-lg-8 col-md-6 float-left p-0">
+      <div class="col-lg-8 col-md-6 float-left p-0">
         <h1>รายชื่อนักศึกษาที่แลกบัตร</h1>
       </div>
-      <div class="col-xl-2 col-lg-4 col-md-6 ml-auto p-0">
+      <div class="col-lg-4 col-md-6 ml-auto p-0">
           <a class="btn btn-outline-success btn-ripple" href=https://docs.google.com/spreadsheets/d/1u9g5P4Q8sCsAAANk2cIzLP75rrESv5QqpVeHA1-RWRU/edit?fbclid=IwAR2Sizotgbis3j1saXSCYofWHuRwYi4WOyh-jVvOQdIf58oB69q-aH3cMA0#gid=0"" role="button">ประวัติ</a>
         <button type="button" class="btn btn-outline-danger btn-ripple" data-toggle="modal" data-target="#form1"><i
             class="fas fa-plus"></i>
@@ -157,7 +157,6 @@
                 <input class="form-control search" type="text" id="idsearch" placeholder="Search...">
         </div>
       </div>
-      <h5>แสดง 50 รายชื่อล่าสุด</h5>
       <div class = "bs-example">
       <form class="was-validated">
         <div class="modal fade" id="form1" data-keyboard="false" data-backdrop="static">
@@ -174,21 +173,21 @@
                   <label for="name">ชื่อ-สกุล :</label><br>
                   <input class="form-control" type="text" id="idName" placeholder="Ex. นายรักชาติ ใจดี"
                     required="required">
-                  <div class="valid-feedback">ถูกต้อง</div>
+                  <div class="valid-feedback"></div>
                   <div class="invalid-feedback">กรุณากรอกข้อมูล</div>
                 </div>
                 <div class="form-group">
-                  <label for="stuid">รหัสนักศึกษา :</label><br>
+                  <label for="stuid">รหัสนักศึกษา(8ตัว) :</label><br>
                   <input class="form-control" type="text" pattern="^[0-9]{8}$" maxlength="8 "oninput="this.value=this.value.replace(/[^0-9]/g,'');" 
                     id="idStuid" placeholder="Ex. 62000000" required>
-                  <div class="valid-feedback">ถูกต้อง</div>
+                  <div class="valid-feedback"></div>
                   <div class="invalid-feedback">กรุณากรอกข้อมูล</div>
                 </div>
                 <div class="form-group">
                   <label for="room">ห้องที่ติดต่อ :</label><br>
                   <input class="form-control" type="text" min="1" oninput="this.value=this.value.replace(/[^0-9]/g,'');"
                     id="idRoom" placeholder="Ex. 4000" maxlength="4" required>
-                  <div class="valid-feedback">ถูกต้อง</div>
+                  <div class="valid-feedback"></div>
                   <div class="invalid-feedback">กรุณากรอกข้อมูล</div>
                 </div>
                 <div class="form-group">
@@ -196,7 +195,7 @@
                   <input class="form-control" type="email" id="idEmail" placeholder="Ex. รหัสนักศึกษา@kmitl.ac.th"
                     required="required" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" autocomplete="off">
                   <div class="valid-feedback"></div>
-                  <div class="invalid-feedback">กรุณากรอกข้อมูล</div>
+                  <div class="invalid-feedback">กรุณากรอกอีเมลที่ถูกต้อง</div>
                 </div>
                 <br>
               </div>
