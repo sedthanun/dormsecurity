@@ -23,7 +23,7 @@ const jwtClient = new google.auth.JWT({
 
 // Get data from RTDB
 
-exports.updateToSheet = functions.database.ref("/studentbook/{documentId}").onWrite((change, context) => {
+exports.copyToSheet = functions.database.ref("/studentbook/{documentId}").onWrite((change, context) => {
   let data = change.after.val();
   console.log(data)
   // Convert JSON to Array following structure below
