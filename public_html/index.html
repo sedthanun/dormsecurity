@@ -192,7 +192,7 @@
                 <div class="form-group">
                   <label for="name">อีเมลเจ้าของห้อง(แจ้งเตือนไปยังเจ้าของห้อง) :</label><br>
                   <input class="form-control" type="email" id="idEmail" placeholder="Ex. รหัสนักศึกษา@kmitl.ac.th"
-                    required="required">
+                    required="required" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" autocomplete="off">
                   <div class="valid-feedback"></div>
                   <div class="invalid-feedback">กรุณากรอกข้อมูล</div>
                 </div>
@@ -329,8 +329,6 @@
           status: 'คืนแล้ว'
           });
     }
-
-
   </script>
 </body>
 </html>
