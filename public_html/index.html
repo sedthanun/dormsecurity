@@ -128,10 +128,6 @@
     .search:focus {
       width: 100%;
 }
-.btn-primary{
-  font-size: 16px;
-  padding: 8px 8px;
-}
 .table{
   font-size: 16px
 }
@@ -214,6 +210,7 @@
 
       <hr class="w-100">
       <!--ตารางแสดงข้อมูลของผู้มาติดต่อ-->
+      <div class="table-responsive">
       <table class="table table-striped" id="tableone">
         <tr>
           <th>ชื่อ-สกุล</th>
@@ -229,6 +226,7 @@
       </table>
       <br>
       <br>
+    </div>
     </div> 
 
   </div>
@@ -282,7 +280,7 @@
         room: lroom,
         time: ltime,
         email: lemail,
-        status: 'ยังไม่คืน'
+        status: 'แลกบัตร'
       });
       Swal.fire({
         position: 'center',
@@ -301,9 +299,9 @@
       let allItems = childSnapshot.val()
       Object.keys(allItems).forEach(key => {
         item = allItems[key]
-        let returnButton = "<button type='button' name='returnBtn' class='btn btn-primary' onclick='restore(\""+key+"\")'>รับคืน</button>"
-        if(item.status == 'คืนแล้ว') {
-          returnButton = "<button disabled type='button' name='returnBtn' class='btn btn-dark' onclick='restore(\""+key+"\")'>คืนแล้ว</button>"
+        let returnButton = "<button type='button' name='returnBtn' class='btn btn-outline-primary' onclick='restore(\""+key+"\")'>รับคืน</button>"
+        if(item.status == 'คืนบัตร') {
+          returnButton = "<button disabled type='button' name='returnBtn' class='btn btn-outline-dark' onclick='restore(\""+key+"\")'>คืนแล้ว</button>"
         }
         document.getElementById('dataRow').innerHTML += "<tr><td>" + item.name + "</td><td>" +
           item.stuid + "</td><td>" + item.room + "</td><td>" + item.time + "</td><td>" + item.status +"</td></td>" +
@@ -340,9 +338,15 @@
     }
     function restore(bookid){
       firebase.database().ref('studentbook/' + bookid).update({
-          status: 'คืนแล้ว'
+          status: 'คืนบัตร'
     });
-    Swal.fire('คืนบัตรเรียบร้อย', '', 'success')
+    Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'คืนบัตรเรียบร้อย',
+        showConfirmButton: false,
+        timer: 1500
+      })
     // window.location.href = "index.html";
     }
   </script>
