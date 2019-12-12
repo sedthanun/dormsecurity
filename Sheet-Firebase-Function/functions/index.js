@@ -29,8 +29,7 @@ exports.updateToSheet = functions.database.ref("/studentbook/{documentId}").onWr
   // Convert JSON to Array following structure below
   /* 
   [
-    ['COL-A', 'COL-B'],
-    ['COL-A', 'COL-B']
+    ['COL-A', 'COL-B', 'COL-C', 'COL-D', 'COL-E']
   ]
   */
 
@@ -43,7 +42,7 @@ exports.updateToSheet = functions.database.ref("/studentbook/{documentId}").onWr
   let maxRange = valueArray.length + 1;
 
   // Do authorization
-  await jwtClient.authorize();
+  jwtClient.authorize();
   
   // Create Google Sheets request
   let request = {
