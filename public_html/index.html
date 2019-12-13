@@ -124,41 +124,94 @@
     padding: 8px 8px 8px 35px;
     -webkit-transition: width 0.4s ease-in-out;
     transition: width 0.4s ease-in-out;
-}
-.search:focus {
+  }
+  .search:focus {
       width: 100%;
-}
+  }
 
-.footer {
-   margin-top: 20px;
-   margin-bottom: 15px;
-   text-align: center;
-}
-.card{
-  display: block;
-}
-
-
-
+  .footer {
+    margin-top: 20px;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  .pagination {
+    margin: 0;
+  }
+  .pagination li:hover{
+    cursor: pointer;
+  }
+  .pagination-container {
+    width: 70%;
+    float:left;
+  }
+  .rows_count {
+    width: 20%;
+    float:right;
+    text-align:right;
+    color: #999;
+  }
+  .num_rows {
+    width: 100%;
+    float:left;
+  }
+  .header_wrap {
+    padding:30px 0;
+    float:right;
+  }
+  .rows_count {
+    width: 20%;
+    float:right;
+    text-align:right;
+    color: #999;
+  }
+  .tb_search{
+    width: 20%;
+    float:right;
+  }
+  .rows_count {
+    width: 20%;
+    float:right;
+    text-align:right;
+    color: #999;
+  }
+  .active {
+    background-color: dodgerblue;
+    color: white;
+  }
+  .paging{
+    margin-left: 20px;
+    margin-right: 20px;
+    border: 20px;
+  }
   </style>
 </head>
 
 <body>
-  <div class="container p-5 mx-auto mt-md-3 row bg-white card shadow">
+  <div class="container p-5 mx-auto mt-md-3 row bg-white card flex-md-row shadow">
     <div class="row mx-auto p-0" id="tableone">
-      <div class="col-lg-8 col-md-6 float-left p-0" style="margin-top: 10px;">
+      <div class="col-lg-8 col-md-6 float-left p-0">
         <h1>รายชื่อนักศึกษาที่แลกบัตร</h1>
       </div>
       <div class="col-lg-4 col-md-6 ml-auto p-0">
-          <a class="btn btn-outline-success btn-ripple" style="margin-top: 10px;" href=https://docs.google.com/spreadsheets/d/1u9g5P4Q8sCsAAANk2cIzLP75rrESv5QqpVeHA1-RWRU/edit?fbclid=IwAR2Sizotgbis3j1saXSCYofWHuRwYi4WOyh-jVvOQdIf58oB69q-aH3cMA0#gid=0"" role="button">ประวัติ</a>
-        <button type="button" class="btn btn-outline-danger btn-ripple" style="margin-top: 10px;" data-toggle="modal" data-target="#form1"><i
+          <a class="btn btn-outline-success btn-ripple" href=https://docs.google.com/spreadsheets/d/1u9g5P4Q8sCsAAANk2cIzLP75rrESv5QqpVeHA1-RWRU/edit?fbclid=IwAR2Sizotgbis3j1saXSCYofWHuRwYi4WOyh-jVvOQdIf58oB69q-aH3cMA0#gid=0"" role="button">ประวัติ</a>
+        <button type="button" class="btn btn-outline-danger btn-ripple" data-toggle="modal" data-target="#form1"><i
             class="fas fa-plus"></i>
           แลกบัตร</button>
       </div>
-      <div class="col-md-12 col-sm-6 col-xs-2 mx-0 p-0" style="margin-top: 10px;">
+      <div class="col-md-12 col-sm-4 col-xs-2 mx-0 p-0" style="margin-top: 10px;">
         <div class="form-group">
                 <input class="form-control search" type="text" id="idsearch" placeholder="Search...">
         </div>
+        <div class="form-group"> 
+          <!--    Show Numbers Of Rows    -->
+          <select class="form-control" name="state" id="maxRows">
+             <option id="blank">แสดงทั้งหมด</option>
+             <option value="5" id="row">5</option>
+             <option value="10" id="row">10</option>
+             <option value="50" id="row">50</option>
+             <option value="100" id="row">100</option>
+            </select>
+          </div>
       </div>
       <div class = "bs-example">
       <form class="was-validated">
@@ -234,12 +287,21 @@
       <br>
       <br>
     </div>
+    <div class='pagination-container'>
+        <nav>
+          <ul class="pagination">
+           <!-- Here the JS Function Will Add the Rows -->
+          </ul>
+        </nav>
+      </div>
+      <div class="rows_count">Showing 11 to 20 of 91 entries</div>
     </div> 
 
   </div>
+
   <a href="#" class="scrollup">Scroll</a>
   <div class="footer">
-      <h6>Created by NORMALWHERE</h6>
+      <h6>Coded by NORMALWHERE</h6>
       <small><a href="https://github.com/sedthanun/dormsecurity">Github</a></small>
 
   </div>
@@ -323,6 +385,137 @@
           "<td>"+ returnButton +"</td>"
       })
     });
+  </script>
+  <script type="text/javascript">
+     getPagination('#tableone');
+  $('#maxRows').trigger('change');
+  function getPagination (table){
+
+      $('#maxRows').on('change',function(){
+        $('.pagination').html('');            // reset pagination div
+        var trnum = 0 ;                 // reset tr counter 
+        var maxRows = parseInt($(this).val());      // get Max Rows from select option
+        
+        var totalRows = $(table+' tbody tr').length;    // numbers of rows 
+       $(table+' tr:gt(0)').each(function(){      // each TR in  table and not the header
+        trnum++;                  // Start Counter 
+        if (trnum > maxRows ){            // if tr number gt maxRows
+          
+          $(this).hide();             // fade it out 
+        }if (trnum <= maxRows ){$(this).show();}// else fade in Important in case if it ..
+       });                      //  was fade out to fade it in 
+       if (totalRows > maxRows){            // if tr total rows gt max rows option
+        var pagenum = Math.ceil(totalRows/maxRows); // ceil total(rows/maxrows) to get ..  
+                              //  numbers of pages 
+        for (var i = 1; i <= pagenum ;){      // for each page append pagination li 
+        $('.pagination').append('<button data-page="'+i+'" id="paging" class="btn btn-outline-primary" style="margin-left:10px;">\
+                      <span>'+ i++ +'<span class="sr-only">(current)</span></span>\
+                    </button>').show();
+        }                     // end for i 
+     
+         
+      }                         // end if row count > max rows
+      $('.pagination li:first-child').addClass('active'); // add active class to the first li 
+        
+        
+        //SHOWING ROWS NUMBER OUT OF TOTAL DEFAULT
+       showig_rows_count(maxRows, 1, totalRows);
+        //SHOWING ROWS NUMBER OUT OF TOTAL DEFAULT
+
+        $('.pagination button').on('click',function(e){   // on click each page
+        e.preventDefault();
+        var pageNum = $(this).attr('data-page');  // get it's number
+        var trIndex = 0 ;             // reset tr counter
+        $('.pagination button').removeClass('active');  // remove active class from all li 
+        $(this).addClass('active');         // add active class to the clicked 
+        
+        
+        //SHOWING ROWS NUMBER OUT OF TOTAL
+       showig_rows_count(maxRows, pageNum, totalRows);
+        //SHOWING ROWS NUMBER OUT OF TOTAL
+        
+        
+        
+         $(table+' tr:gt(0)').each(function(){    // each tr in table not the header
+          trIndex++;                // tr index counter 
+          // if tr index gt maxRows*pageNum or lt maxRows*pageNum-maxRows fade if out
+          if (trIndex > (maxRows*pageNum) || trIndex <= ((maxRows*pageNum)-maxRows)){
+            $(this).hide();   
+          }else {$(this).show();}         //else fade in 
+         });                    // end of for each tr in table
+          });                   // end of on click pagination list
+    });
+                      // end of on select change 
+     
+                // END OF PAGINATION 
+    
+  } 
+
+
+      
+
+// SI SETTING
+$(function(){
+  // Just to append id number for each row  
+default_index();
+          
+});
+
+//ROWS SHOWING FUNCTION
+function showig_rows_count(maxRows, pageNum, totalRows) {
+   //Default rows showing
+        var end_index = maxRows*pageNum;
+        var start_index = ((maxRows*pageNum)- maxRows) + parseFloat(1);
+        var string = 'Showing '+ start_index + ' to ' + end_index +' of ' + (totalRows-1) + ' entries';               
+        $('.rows_count').html(string);
+}
+
+// All Table search script
+function FilterkeyWord_all_table() {
+  
+// Count td if you want to search on all table instead of specific column
+
+  var count = $('.table').children('tbody').children('tr:first-child').children('td').length; 
+
+        // Declare variables
+  var input, filter, table, tr, td, i;
+  input = document.getElementById("search_input_all");
+  var input_value =     document.getElementById("search_input_all").value;
+        filter = input.value.toLowerCase();
+  if(input_value !=''){
+        table = document.getElementById("tableone");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 1; i < tr.length; i++) {
+          
+          var flag = 0;
+           
+          for(j = 0; j < count; j++){
+            td = tr[i].getElementsByTagName("td")[j];
+            if (td) {
+             
+                var td_text = td.innerHTML;  
+                if (td.innerHTML.toLowerCase().indexOf(filter) > -1) {
+                //var td_text = td.innerHTML;  
+                //td.innerHTML = 'shaban';
+                  flag = 1;
+                } else {
+                  //DO NOTHING
+                }
+              }
+            }
+          if(flag==1){
+                     tr[i].style.display = "";
+          }else {
+             tr[i].style.display = "none";
+          }
+        }
+    }else {
+      //RESET TABLE
+      $('#maxRows').trigger('change');
+    }
+    }
   </script>
   <script>
   $(document).ready(function(){
