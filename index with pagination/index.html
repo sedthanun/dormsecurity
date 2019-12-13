@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>ระบบแลกบัตร | Dorm Security</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css" />
+  <link rel="stylesheet" href="stylesheet.css" type="text/css" charset="utf-8" />
+  <link rel="stylesheet" href="specimen_files/specimen_stylesheet.css" type="text/css" charset="utf-8">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+  <script type="text/javascript" src="moment-with-locales.js"></script>
+  <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+ 
+	<script type="text/javascript">
+	$(document).ready(function(){
+	  /* ปุ่มเลื่อนหน้าต่างขึ้นด้านบน */
+			$(window).scroll(function(){
+				if ($(this).scrollTop() > 100) {
+					$('.scrollup').fadeIn();
+				} else {
+					$('.scrollup').fadeOut();
+				}
+			}); 
+	 
+			$('.scrollup').click(function(){
+				$("html, body").animate({ scrollTop: 0 }, 600);
+				return false;
+			});
+		<!--//-->
+		
+	});
+	</script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+    integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+  <style type="text/css">
+    body {
+      font-family: 'maledpanregular';
+      font-size: 15px;
+    }
+    .btn-outline-danger {
+      border-radius: 40px;
+      transition: 0.5s;
+    }
+    .btn-outline-danger:hover {
+      transform: scale(1.2);
+    }
+    .btn-outline-danger:focus {
+      outline: none !important;
+      box-shadow: none;
+    }
+    .btn-outline-success {
+      border-radius: 40px;
+      transition: 0.5s;
+      margin-right: 15px;
+    }
+    .btn-outline-success:hover {
+      transform: scale(1.2);
+    }
+    .btn-outline-success:focus {
+      outline: none !important;
+      box-shadow: none;
+    }
+    .btn-ripple {
+      display: inline-block;
+      position: relative;
+      overflow: hidden;
+      transition: all ease-in-out .5s;
+    }
+    .btn-ripple::after {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 25%;
+      height: 100%;
+      width: 50%;
+      background-color: #000;
+      border-radius: 50%;
+      opacity: 0;
+      pointer-events: none;
+      transition: all ease-in-out 0.5s;
+      transform: scale(5, 5);
+    }
+    .btn-ripple:active::after {
+      padding: 0;
+      margin: 0;
+      opacity: .2;
+      transition: 0s;
+      transform: scale(0, 0);
+    }
+    .scrollup {
+			width:40px;
+			height:40px;
+			opacity:0.3;
+			position:fixed;
+			bottom:50px;
+			right:100px;
+			display:none;
+			text-indent:-9999px;
+			background: url(icon_top.png) no-repeat;
+			/* ตั้งให้ปุ่มกลับไปบนสุดปรากฎออกเมื่อเวลาเลื่อนเมาส์หารายชื่อจำนวนมากในแถบล่าง */
+    }
+    .table{
+      box-shadow: 7px 7px 5px grey;
+      font-size: 16px;
+    }
+    .search {
+    width: 130px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 40px;
+    font-size: 15px;
+    background-color: white;
+    background-image: url('icon.jpg');
+    background-size: 25px;
+    background-position: 5px 5px; 
+    background-repeat: no-repeat;
+    padding: 8px 8px 8px 35px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+  }
+  .search:focus {
+      width: 100%;
+  }
+
+  .footer {
+    margin-top: 20px;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  .pagination {
+    margin: 0;
+  }
+  .pagination li:hover{
+    cursor: pointer;
+  }
+  .pagination-container {
+    width: 70%;
+    float:left;
+  }
+  .rows_count {
+    width: 20%;
+    float:right;
+    text-align:right;
+    color: #999;
+  }
+  .num_rows {
+    width: 100%;
+    float:left;
+  }
+  .header_wrap {
+    padding:30px 0;
+    float:right;
+  }
+  .rows_count {
+    width: 20%;
+    float:right;
+    text-align:right;
+    color: #999;
+  }
+  .tb_search{
+    width: 20%;
+    float:right;
+  }
+  .rows_count {
+    width: 20%;
+    float:right;
+    text-align:right;
+    color: #999;
+  }
+  .active {
+    background-color: dodgerblue;
+    color: white;
+  }
+  .paging{
+    margin-left: 20px;
+    margin-right: 20px;
+    border: 20px;
+  }
+  </style>
+</head>
+
+<body>
+  <div class="container p-5 mx-auto mt-md-3 row bg-white card flex-md-row shadow">
+    <div class="row mx-auto p-0" id="tableone">
+      <div class="col-lg-8 col-md-6 float-left p-0">
+        <h1>รายชื่อนักศึกษาที่แลกบัตร</h1>
+      </div>
+      <div class="col-lg-4 col-md-6 ml-auto p-0">
+          <a class="btn btn-outline-success btn-ripple" href=https://docs.google.com/spreadsheets/d/1u9g5P4Q8sCsAAANk2cIzLP75rrESv5QqpVeHA1-RWRU/edit?fbclid=IwAR2Sizotgbis3j1saXSCYofWHuRwYi4WOyh-jVvOQdIf58oB69q-aH3cMA0#gid=0"" role="button">ประวัติ</a>
+        <button type="button" class="btn btn-outline-danger btn-ripple" data-toggle="modal" data-target="#form1"><i
+            class="fas fa-plus"></i>
+          แลกบัตร</button>
+      </div>
+      <div class="col-md-8 col-sm-4 col-xs-2 mx-0 p-0" style="margin-top: 10px;">
+        <div class="form-group">
+                <input class="form-control search" type="text" id="idsearch" placeholder="Search...">
+        </div>
+        <div class="form-group"> 
+          <!--    Show Numbers Of Rows    -->
+          <select class="form-control" name="state" id="maxRows">
+             <option id="blank">แสดงทั้งหมด</option>
+             <option value="5" id="row">5</option>
+             <option value="10" id="row">10</option>
+             <option value="50" id="row">50</option>
+             <option value="100" id="row">100</option>
+            </select>
+          </div>
+      </div>
+      <div class = "bs-example">
+      <form class="was-validated">
+        <div class="modal fade" id="form1" data-keyboard="false" data-backdrop="static">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <!--แบบฟอร์มข้อมูลของผู้มาติดต่อ-->
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">ระบบแลกบัตร</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                  <label for="name">ชื่อ-สกุล :</label><br>
+                  <input class="form-control" type="text" id="idName" placeholder="Ex. นายรักชาติ ใจดี"
+                    required="required">
+                  <div class="valid-feedback"></div>
+                  <div class="invalid-feedback">กรุณากรอกข้อมูล</div>
+                </div>
+                <div class="form-group">
+                  <label for="stuid">รหัสนักศึกษา(8ตัว) :</label><br>
+                  <input class="form-control" type="text" pattern="^[0-9]{8}$" maxlength="8 "oninput="this.value=this.value.replace(/[^0-9]/g,'');" 
+                    id="idStuid" placeholder="Ex. 62000000" required>
+                  <div class="valid-feedback"></div>
+                  <div class="invalid-feedback">กรุณากรอกข้อมูล</div>
+                </div>
+                <div class="form-group">
+                  <label for="room">ห้องที่ติดต่อ :</label><br>
+                  <input class="form-control" type="text" min="1" oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                    id="idRoom" placeholder="Ex. 4000" maxlength="4" required>
+                  <div class="valid-feedback"></div>
+                  <div class="invalid-feedback">กรุณากรอกข้อมูล</div>
+                </div>
+                <div class="form-group">
+                  <label for="name">อีเมลเจ้าของห้อง(แจ้งเตือนไปยังเจ้าของห้อง) :</label><br>
+                  <input class="form-control" type="email" id="idEmail" placeholder="Ex. รหัสนักศึกษา@kmitl.ac.th"
+                    required="required" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" autocomplete="off">
+                  <div class="valid-feedback"></div>
+                  <div class="invalid-feedback">กรุณากรอกอีเมลที่ถูกต้อง</div>
+                </div>
+                <br>
+              </div>
+              <div class="modal-footer">
+                <button type="button" id="cancel" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
+                <input class="btn btn-danger" id="ResetBtn" type="reset" value="รีเซ็ต">
+                <button type="submit" class="btn btn-primary enableOnInput" data-dismiss="modal" id="SubmitBtn"
+                  disabled='disabled'>ยืนยัน</button>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+      <hr class="w-100">
+      <!--ตารางแสดงข้อมูลของผู้มาติดต่อ-->
+      <div class="table-responsive">
+      <table class="table table-striped" id="tableone">
+        <tr>
+          <th>ชื่อ-สกุล</th>
+          <th>รหัสนักศึกษา</th>
+          <th>ห้องที่ติดต่อ</th>
+          <th>เวลา</th>
+          <th>สถานะ</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody id="dataRow">
+        </tbody>
+      </table>
+      <br>
+      <br>
+    </div>
+    <div class='pagination-container'>
+        <nav>
+          <ul class="pagination">
+           <!-- Here the JS Function Will Add the Rows -->
+          </ul>
+        </nav>
+      </div>
+      <div class="rows_count">Showing 11 to 20 of 91 entries</div>
+    </div> 
+
+  </div>
+
+  <a href="#" class="scrollup">Scroll</a>
+  <div class="footer">
+      <h6>Coded by NORMALWHERE</h6>
+      <small><a href="https://github.com/sedthanun/dormsecurity">Github</a></small>
+
+  </div>
+  </footer>
+
+  
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+
+  <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase.js"></script>
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+  <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-analytics.js"></script>
+
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyBEJ4BiuuRbXpVu1UlY3QmnpYr_IkmEIwo",
+      authDomain: "dormsecurity.firebaseapp.com",
+      databaseURL: "https://dormsecurity.firebaseio.com",
+      projectId: "dormsecurity",
+      storageBucket: "dormsecurity.appspot.com",
+      messagingSenderId: "591998015538",
+      appId: "1:591998015538:web:6a65a87de715334296c42b",
+      measurementId: "G-VGQT6XRQ4S"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+    let myFirebase = firebase.database();
+    let dataRef = myFirebase.ref('/studentbook');
+    document.getElementById("cancel").onclick = function () {
+      document.getElementById("idName").value = "";
+      document.getElementById("idStuid").value = "";
+      document.getElementById("idRoom").value = "";
+      document.getElementById("idEmail").value = "";
+      $('#SubmitBtn').attr('disabled', 'disabled');
+      }
+    document.getElementById("SubmitBtn").onclick = function () {
+      let lname = document.getElementById('idName').value;
+      let lstuid = document.getElementById('idStuid').value;
+      let lroom = document.getElementById('idRoom').value;
+      let lemail = document.getElementById('idEmail').value;
+      let ltime = new Date()
+      document.getElementById("idName").value = "";
+      document.getElementById("idStuid").value = "";
+      document.getElementById("idRoom").value = "";
+      document.getElementById("idEmail").value = "";
+      //location.reload(true);//
+      ltime = moment().utcOffset('+0700').format('DD-MM-YYYY HH:mm')
+      dataRef.push({
+        name: lname,
+        stuid: lstuid,
+        room: lroom,
+        time: ltime,
+        email: lemail,
+        status: 'แลกบัตร'
+      });
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'ส่งข้อมูลเรียบร้อย',
+        showConfirmButton: false,
+        timer: 1500
+      })
+      //alert("ส่งข้อมูลเรียบร้อย")
+      $('#form1').modal('hide');
+      $('#SubmitBtn').attr('disabled', 'disabled');
+    };
+    dataRef.orderByChild("time").on('value', function (childSnapshot) {
+      // console.log(childSnapshot.val())
+      document.getElementById('dataRow').innerHTML = ''
+      let allItems = childSnapshot.val()
+      Object.keys(allItems).forEach(key => {
+        item = allItems[key]
+        let returnButton = "<button type='button' name='returnBtn' class='btn btn-outline-primary' onclick='restore(\""+key+"\")'>รับคืน</button>"
+        if(item.status == 'คืนบัตร') {
+          returnButton = "<button disabled type='button' name='returnBtn' class='btn btn-outline-dark' onclick='restore(\""+key+"\")'>คืนแล้ว</button>"
+        }
+        document.getElementById('dataRow').innerHTML += "<tr><td>" + item.name + "</td><td>" +
+          item.stuid + "</td><td>" + item.room + "</td><td>" + item.time + "</td><td>" + item.status +"</td></td>" +
+          "<td>"+ returnButton +"</td>"
+      })
+    });
+  </script>
+  <script type="text/javascript">
+     getPagination('#tableone');
+  $('#maxRows').trigger('change');
+  function getPagination (table){
+
+      $('#maxRows').on('change',function(){
+        $('.pagination').html('');            // reset pagination div
+        var trnum = 0 ;                 // reset tr counter 
+        var maxRows = parseInt($(this).val());      // get Max Rows from select option
+        
+        var totalRows = $(table+' tbody tr').length;    // numbers of rows 
+       $(table+' tr:gt(0)').each(function(){      // each TR in  table and not the header
+        trnum++;                  // Start Counter 
+        if (trnum > maxRows ){            // if tr number gt maxRows
+          
+          $(this).hide();             // fade it out 
+        }if (trnum <= maxRows ){$(this).show();}// else fade in Important in case if it ..
+       });                      //  was fade out to fade it in 
+       if (totalRows > maxRows){            // if tr total rows gt max rows option
+        var pagenum = Math.ceil(totalRows/maxRows); // ceil total(rows/maxrows) to get ..  
+                              //  numbers of pages 
+        for (var i = 1; i <= pagenum ;){      // for each page append pagination li 
+        $('.pagination').append('<button data-page="'+i+'" id="paging" class="btn btn-outline-primary">\
+                      <span>'+ i++ +'<span class="sr-only">(current)</span></span>\
+                    </button>').show();
+        }                     // end for i 
+     
+         
+      }                         // end if row count > max rows
+      $('.pagination li:first-child').addClass('active'); // add active class to the first li 
+        
+        
+        //SHOWING ROWS NUMBER OUT OF TOTAL DEFAULT
+       showig_rows_count(maxRows, 1, totalRows);
+        //SHOWING ROWS NUMBER OUT OF TOTAL DEFAULT
+
+        $('.pagination button').on('click',function(e){   // on click each page
+        e.preventDefault();
+        var pageNum = $(this).attr('data-page');  // get it's number
+        var trIndex = 0 ;             // reset tr counter
+        $('.pagination button').removeClass('active');  // remove active class from all li 
+        $(this).addClass('active');         // add active class to the clicked 
+        
+        
+        //SHOWING ROWS NUMBER OUT OF TOTAL
+       showig_rows_count(maxRows, pageNum, totalRows);
+        //SHOWING ROWS NUMBER OUT OF TOTAL
+        
+        
+        
+         $(table+' tr:gt(0)').each(function(){    // each tr in table not the header
+          trIndex++;                // tr index counter 
+          // if tr index gt maxRows*pageNum or lt maxRows*pageNum-maxRows fade if out
+          if (trIndex > (maxRows*pageNum) || trIndex <= ((maxRows*pageNum)-maxRows)){
+            $(this).hide();   
+          }else {$(this).show();}         //else fade in 
+         });                    // end of for each tr in table
+          });                   // end of on click pagination list
+    });
+                      // end of on select change 
+     
+                // END OF PAGINATION 
+    
+  } 
+
+
+      
+
+// SI SETTING
+$(function(){
+  // Just to append id number for each row  
+default_index();
+          
+});
+
+//ROWS SHOWING FUNCTION
+function showig_rows_count(maxRows, pageNum, totalRows) {
+   //Default rows showing
+        var end_index = maxRows*pageNum;
+        var start_index = ((maxRows*pageNum)- maxRows) + parseFloat(1);
+        var string = 'Showing '+ start_index + ' to ' + end_index +' of ' + (totalRows-1) + ' entries';               
+        $('.rows_count').html(string);
+}
+
+// All Table search script
+function FilterkeyWord_all_table() {
+  
+// Count td if you want to search on all table instead of specific column
+
+  var count = $('.table').children('tbody').children('tr:first-child').children('td').length; 
+
+        // Declare variables
+  var input, filter, table, tr, td, i;
+  input = document.getElementById("search_input_all");
+  var input_value =     document.getElementById("search_input_all").value;
+        filter = input.value.toLowerCase();
+  if(input_value !=''){
+        table = document.getElementById("tableone");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 1; i < tr.length; i++) {
+          
+          var flag = 0;
+           
+          for(j = 0; j < count; j++){
+            td = tr[i].getElementsByTagName("td")[j];
+            if (td) {
+             
+                var td_text = td.innerHTML;  
+                if (td.innerHTML.toLowerCase().indexOf(filter) > -1) {
+                //var td_text = td.innerHTML;  
+                //td.innerHTML = 'shaban';
+                  flag = 1;
+                } else {
+                  //DO NOTHING
+                }
+              }
+            }
+          if(flag==1){
+                     tr[i].style.display = "";
+          }else {
+             tr[i].style.display = "none";
+          }
+        }
+    }else {
+      //RESET TABLE
+      $('#maxRows').trigger('change');
+    }
+    }
+  </script>
+  <script>
+  $(document).ready(function(){
+    $("#idsearch").on("keyup", function() {
+      var value = $(this).val().toLowerCase();
+      $("#dataRow tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
+  </script>
+  <script type='text/javascript'> 
+    $("#idName, #idStuid, #idRoom, #idEmail").bind('keyup', function () {
+      if (allFilled()) $('#SubmitBtn').removeAttr('disabled');
+      else $('#SubmitBtn').attr('disabled', 'disabled');
+    });
+    function allFilled() {
+      var filled = true;
+      $('.bs-example input').each(function () {
+        if ($(this).val() == '') filled = false;
+        else if (document.getElementById("idStuid").validity.patternMismatch) filled = false;
+        else if (document.getElementById("idEmail").validity.patternMismatch) filled = false;
+      });
+      return filled;
+    }
+  </script>
+  <script>
+    document.getElementById("ResetBtn").onclick = function () {
+      $('#SubmitBtn').attr('disabled', 'disabled');
+    }
+    function restore(bookid){
+      firebase.database().ref('studentbook/' + bookid).update({
+          status: 'คืนบัตร'
+    });
+    Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'คืนบัตรเรียบร้อย',
+        showConfirmButton: false,
+        timer: 1500
+      })
+    // window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html>
