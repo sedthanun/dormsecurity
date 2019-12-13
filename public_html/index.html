@@ -203,16 +203,13 @@
       </div>
       <div class="col-md-12 col-sm-6 col-xs-2 mx-0 p-0" style="margin-top: 10px;">
         <div class="form-group">
-                <input class="form-control search" type="text" id="idsearch" placeholder="Search...">
+                <input class="form-control search" type="text" id="idsearch" onkeyup="FilterkeyWord_all_table()"  placeholder="Search...">
         </div>
         <div class="form-group"> 
           <!--    Show Numbers Of Rows    -->
           <select class="form-control" name="state" id="maxRows">
-             <option id="blank">แสดงทั้งหมด</option>
-             <option value="5" id="row">5</option>
-             <option value="10" id="row">10</option>
-             <option value="50" id="row">50</option>
-             <option value="100" id="row">100</option>
+             <option value="10" id="row">แสดง 10 รายชื่อ</option>
+             <option value="5000">แสดงทั้งหมด</option>
             </select>
           </div>
       </div>
@@ -297,7 +294,7 @@
           </ul>
         </nav>
       </div>
-      <div class="rows_count">Showing 11 to 20 of 91 entries</div>
+      <div class="rows_count"></div>
     </div> 
 
   </div>
@@ -386,14 +383,13 @@
         document.getElementById('dataRow').innerHTML += "<tr><td>" + item.name + "</td><td>" +
           item.stuid + "</td><td>" + item.room + "</td><td>" + item.time + "</td><td>" + item.status +"</td></td>" +
           "<td>"+ returnButton +"</td>"
+          getPagination('#tableone');
+          
       })
     });
-  </script>
-  <script type="text/javascript">
-     getPagination('#tableone');
-  $('#maxRows').trigger('change');
-  function getPagination (table){
 
+  function getPagination (table){
+      $('#maxRows').trigger('change');
       $('#maxRows').on('change',function(){
         $('.pagination').html('');            // reset pagination div
         var trnum = 0 ;                 // reset tr counter 
@@ -455,23 +451,22 @@
   } 
 
 
-      
-
-// SI SETTING
-$(function(){
-  // Just to append id number for each row  
-default_index();
-          
-});
 
 //ROWS SHOWING FUNCTION
 function showig_rows_count(maxRows, pageNum, totalRows) {
    //Default rows showing
         var end_index = maxRows*pageNum;
         var start_index = ((maxRows*pageNum)- maxRows) + parseFloat(1);
-        var string = 'Showing '+ start_index + ' to ' + end_index +' of ' + (totalRows-1) + ' entries';               
-        $('.rows_count').html(string);
+        var totar = totalRows-1
+        var string = 'แสดง '+ start_index + ' ถึง ' + end_index +' ของทั้งหมด ' + (totar) + ' ข้อมูล'; 
+        var stringtwo = 'แสดงทั้งหมด ' + (totalRows-1) + ' ข้อมูล'; 
+        if(end_index == 5000){
+          $('.rows_count').html(stringtwo);
+        }else{
+          $('.rows_count').html(string);}
 }
+
+
 
 // All Table search script
 function FilterkeyWord_all_table() {
@@ -482,8 +477,8 @@ function FilterkeyWord_all_table() {
 
         // Declare variables
   var input, filter, table, tr, td, i;
-  input = document.getElementById("search_input_all");
-  var input_value =     document.getElementById("search_input_all").value;
+  input = document.getElementById("idsearch");
+  var input_value = document.getElementById("idsearch").value;
         filter = input.value.toLowerCase();
   if(input_value !=''){
         table = document.getElementById("tableone");
@@ -520,16 +515,7 @@ function FilterkeyWord_all_table() {
     }
     }
   </script>
-  <script>
-  $(document).ready(function(){
-    $("#idsearch").on("keyup", function() {
-      var value = $(this).val().toLowerCase();
-      $("#dataRow tr").filter(function() {
-        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-      });
-    });
-  });
-  </script>
+ 
   <script type='text/javascript'> 
     $("#idName, #idStuid, #idRoom, #idEmail").bind('keyup', function () {
       if (allFilled()) $('#SubmitBtn').removeAttr('disabled');
