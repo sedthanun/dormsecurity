@@ -80,6 +80,11 @@
       font-size: 16px;
       border-radius: 10px;
     }
+    .table-striped{
+      margin: 0px;
+      padding: 0px;
+      border-radius: 10px;
+    }
     .search {
     width: 130px;
     box-sizing: border-box;
@@ -98,7 +103,6 @@
   .search:focus {
       width: 100%;
   }
-
   .footer {
     margin-top: 20px;
     margin-bottom: 15px;
@@ -242,20 +246,19 @@
       <!--ตารางแสดงข้อมูลของผู้มาติดต่อ-->
       <div class="table-responsive">
       <table class="table table-striped" id="tableone">
-        <tr>
+        <thead>
+            <tr>
           <th>ชื่อ-สกุล</th>
           <th>รหัสนักศึกษา</th>
           <th>ห้องที่ติดต่อ</th>
           <th>เวลา</th>
           <th>สถานะ</th>
           <th></th>
-        </tr>
+          </tr>
         </thead>
         <tbody id="dataRow">
         </tbody>
       </table>
-      <br>
-      <br>
     </div>
     <div class='pagination-container'>
         <nav>
@@ -354,17 +357,15 @@
           item.stuid + "</td><td>" + item.room + "</td><td>" + item.time + "</td><td>" + item.status +"</td></td>" +
           "<td>"+ returnButton +"</td>"
           getPagination('#tableone');
+          $('#maxRows').trigger('change');
           
       })
     });
-
   function getPagination (table){
-      $('#maxRows').trigger('change');
-      $('#maxRows').on('change',function(){
+        $('#maxRows').on('change',function(){
         $('.pagination').html('');            // reset pagination div
         var trnum = 0 ;                 // reset tr counter 
         var maxRows = parseInt($(this).val());      // get Max Rows from select option
-        
         var totalRows = $(table+' tbody tr').length;    // numbers of rows 
        $(table+' tr:gt(0)').each(function(){      // each TR in  table and not the header
         trnum++;                  // Start Counter 
@@ -390,7 +391,6 @@
         //SHOWING ROWS NUMBER OUT OF TOTAL DEFAULT
        showig_rows_count(maxRows, 1, totalRows);
         //SHOWING ROWS NUMBER OUT OF TOTAL DEFAULT
-
         $('.pagination button').on('click',function(e){   // on click each page
         e.preventDefault();
         var pageNum = $(this).attr('data-page');  // get it's number
@@ -419,32 +419,24 @@
                 // END OF PAGINATION 
     
   } 
-
-
-
 //ROWS SHOWING FUNCTION
 function showig_rows_count(maxRows, pageNum, totalRows) {
    //Default rows showing
         var end_index = maxRows*pageNum;
         var start_index = ((maxRows*pageNum)- maxRows) + parseFloat(1);
-        var totar = totalRows-1
+        var totar = totalRows
         var string = 'แสดง '+ start_index + ' ถึง ' + end_index +' ของทั้งหมด ' + (totar) + ' ข้อมูล'; 
-        var stringtwo = 'แสดงทั้งหมด ' + (totalRows-1) + ' ข้อมูล'; 
+        var stringtwo = 'แสดงทั้งหมด ' + (totalRows) + ' ข้อมูล'; 
         if(end_index == 5000){
           $('.rows_count').html(stringtwo);
         }else{
           $('.rows_count').html(string);}
 }
-
-
-
 // All Table search script
 function FilterkeyWord_all_table() {
   
 // Count td if you want to search on all table instead of specific column
-
   var count = $('.table').children('tbody').children('tr:first-child').children('td').length; 
-
         // Declare variables
   var input, filter, table, tr, td, i;
   input = document.getElementById("idsearch");
@@ -453,7 +445,6 @@ function FilterkeyWord_all_table() {
   if(input_value !=''){
         table = document.getElementById("tableone");
         tr = table.getElementsByTagName("tr");
-
         // Loop through all table rows, and hide those who don't match the search query
         for (i = 1; i < tr.length; i++) {
           
