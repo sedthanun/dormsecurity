@@ -19,7 +19,8 @@
  
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
     integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-  <style type="text/css">
+  <style type="text/css"> 
+    /*  รูปแบบการแสดงผลส่วนต่างๆของเว็บ */
     body {
       font-family: 'maledpanregular';
       font-size: 15px;
@@ -274,7 +275,7 @@
 
 
   <div class="footer">
-      <h6>coded by NORMALWHERE</h6>
+      <h6>Coded by NORMALWHERE</h6>
       <small><a href="https://github.com/sedthanun/dormsecurity">Github</a></small>
 
   </div>
@@ -290,6 +291,7 @@
 
   <script>
     // Your web app's Firebase configuration
+    // เชื่อมต่อ database เข้ากับเว็บ
     var firebaseConfig = {
       apiKey: "AIzaSyBEJ4BiuuRbXpVu1UlY3QmnpYr_IkmEIwo",
       authDomain: "dormsecurity.firebaseapp.com",
@@ -324,7 +326,9 @@
       document.getElementById("idEmail").value = "";
       //location.reload(true);//
       ltime = moment().utcOffset('+0700').format('DD-MM-YYYY HH:mm')
+      //ตั้งเวลาให้ตรบกับประเทศไทย
       dataRef.push({
+        //เอาข้อมูลลง database ของ firebase
         name: lname,
         stuid: lstuid,
         room: lroom,
@@ -333,6 +337,7 @@
         status: 'แลกบัตร'
       });
       Swal.fire({
+        //แจ้งเตือนจะเด้งขึ้นเมื่อกดยืนยืนแล้ว
         position: 'center',
         icon: 'success',
         title: 'ส่งข้อมูลเรียบร้อย',
@@ -341,13 +346,14 @@
       })
       //alert("ส่งข้อมูลเรียบร้อย")
       $('#form1').modal('hide');
-      $('#SubmitBtn').attr('disabled', 'disabled');
+      $('#SubmitBtn').attr('disabled', 'disabled'); //ทำให้ปุ่มยืนยันไม่สามารถกดยืนยันได้อีกครั้ง
     };
     dataRef.orderByChild("time").on('value', function (childSnapshot) {
       // console.log(childSnapshot.val())
       document.getElementById('dataRow').innerHTML = ''
       let allItems = childSnapshot.val()
       Object.keys(allItems).forEach(key => {
+        //ฟังก์ชันสำหรับเพิ่มปุ่มรับคืนสำหรับคนแลกบัตรไป และจะเปลี่ยนเป็นคืนแล้วหากมีการมารับบัตรคืน
         item = allItems[key]
         let returnButton = "<button type='button' name='returnBtn' class='btn btn-outline-primary' onclick='restore(\""+key+"\")'>รับคืน</button>"
         if(item.status == 'คืนบัตร') {
@@ -362,6 +368,7 @@
       })
     });
   function getPagination (table){
+    //ฟังก์ชั่นสำหรับเลือกการแสดงข้อมูลสูงสุดในตารางต่อ 1 หน้า
         $('#maxRows').on('change',function(){
         $('.pagination').html('');            // reset pagination div
         var trnum = 0 ;                 // reset tr counter 
@@ -422,6 +429,7 @@
 //ROWS SHOWING FUNCTION
 function showig_rows_count(maxRows, pageNum, totalRows) {
    //Default rows showing
+   //ฟังก์ชั่นส่วนนี้ไว้ใช้ แสดงจำนวนข้อมูลผู้ที่แลกบัตรเอาไว้ทั้งหมดและบอกลำดับของข้อมูล
         var end_index = maxRows*pageNum;
         var start_index = ((maxRows*pageNum)- maxRows) + parseFloat(1);
         var totar = totalRows
@@ -434,7 +442,7 @@ function showig_rows_count(maxRows, pageNum, totalRows) {
 }
 // All Table search script
 function FilterkeyWord_all_table() {
-  
+  //ฟังก์ชันนี้ไว้สำหรับกรองข้อมูลเมื่อใส่ข้อมูลลงในช่องค้นหา จะแสดงข้อมูลที่ตรงหรือคล้ายกันในตารางข้อมูล
 // Count td if you want to search on all table instead of specific column
   var count = $('.table').children('tbody').children('tr:first-child').children('td').length; 
         // Declare variables
@@ -479,24 +487,30 @@ function FilterkeyWord_all_table() {
  
   <script type='text/javascript'> 
     $("#idName, #idStuid, #idRoom, #idEmail").bind('keyup', function () {
+      //ฟังก์ชั่นที่ตรวจสอบข้อมูลแต่ละส่วนเมื่อใส่ข้อมูลลงไป หากถูกต้องตามเกณฑ์ที่กำหนดจะสามารถกดยืนยันได้ ถ้าไม่จะไม่สามารถกดปุ่มยืนยันได้
       if (allFilled()) $('#SubmitBtn').removeAttr('disabled');
       else $('#SubmitBtn').attr('disabled', 'disabled');
     });
     function allFilled() {
+      //ฟังก์ชันเช็คเมื่อข้อมูลที่กรอกไม่ครบหรือไม่เป็นไปตามเกณฑ์/ที่กำหนด จะทำให้ไม่สามารถกดปุ่มยืนยันได้
       var filled = true;
       $('.bs-example input').each(function () {
         if ($(this).val() == '') filled = false;
-        else if (document.getElementById("idStuid").validity.patternMismatch) filled = false;
+        else if (document.getElementById("idStuid").validity.patternMismatch) filled = false;  
+        //เช็คเมื่อรหัสนักศึกษาไม่เป็นไปตามเกณฑ์/ที่กำหนด จะทำให้ไม่สามารถกดปุ่มยืนยันได้
         else if (document.getElementById("idEmail").validity.patternMismatch) filled = false;
+        //เช็คเมื่ออีเมลที่กรอกไม่เป็นไปตามเกณฑ์/ที่กำหนด จะทำให้ไม่สามารถกดปุ่มยืนยันได้
       });
       return filled;
     }
   </script>
   <script>
     document.getElementById("ResetBtn").onclick = function () {
+      //ล้างข้อมูลที่กรอกเมื่อกดปุ่ม Reset
       $('#SubmitBtn').attr('disabled', 'disabled');
     }
     function restore(bookid){
+      //เปลี่ยนสถานะเป็นคืนบัตร
       firebase.database().ref('studentbook/' + bookid).update({
           status: 'คืนบัตร'
     });
