@@ -217,7 +217,7 @@
                 <div class="form-group">
                   <label for="room">ห้องที่ติดต่อ :</label><br>
                   <input class="form-control" type="text" min="1" oninput="this.value=this.value.replace(/[^0-9]/g,'');"
-                    id="idRoom" placeholder="Ex. 4000" maxlength="4" required>
+                    id="idRoom" placeholder="Ex. 4000" maxlength="4" required pattern="^[1-5]+[0-9]{3}$">
                   <div class="valid-feedback"></div>
                   <div class="invalid-feedback">กรุณากรอกข้อมูล</div>
                 </div>
@@ -500,6 +500,7 @@ function FilterkeyWord_all_table() {
         //เช็คเมื่อรหัสนักศึกษาไม่เป็นไปตามเกณฑ์/ที่กำหนด จะทำให้ไม่สามารถกดปุ่มยืนยันได้
         else if (document.getElementById("idEmail").validity.patternMismatch) filled = false;
         //เช็คเมื่ออีเมลที่กรอกไม่เป็นไปตามเกณฑ์/ที่กำหนด จะทำให้ไม่สามารถกดปุ่มยืนยันได้
+        else if (document.getElementById("idRoom").validity.patternMismatch) filled = false;
       });
       return filled;
     }

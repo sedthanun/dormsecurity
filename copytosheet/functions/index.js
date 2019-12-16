@@ -43,7 +43,7 @@ exports.copyToSheet = functions.database.ref("/studentbook").onUpdate((change, c
 
   // Do authorization
   jwtClient.authorize();
-  
+
   // Create Google Sheets request
   let request = {
     auth: jwtClient,
